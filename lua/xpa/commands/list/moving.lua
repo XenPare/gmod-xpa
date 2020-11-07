@@ -1,4 +1,8 @@
 return "Moving", "*", {
+	--[[
+		xpa teleport <steamid/name/userid>
+	]]
+
 	["teleport"] = {
 		name = "Teleport",
 		immunity = 1000,
@@ -40,6 +44,10 @@ return "Moving", "*", {
 		end
 	},
 
+	--[[
+		xpa goto <steamid/name/userid>
+	]]
+
 	["goto"] = {
 		name = "GoTo",
 		immunity = 1000,
@@ -67,6 +75,10 @@ return "Moving", "*", {
 			XPA.AChatLog(pl:Name() .. " has been teleported to " .. target:Name())
 		end
 	},
+
+	--[[
+		xpa return <steamid/name/userid>
+	]]
 
 	["return"] = {
 		name = "Return",
