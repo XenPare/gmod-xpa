@@ -1,4 +1,8 @@
 return "Punishment", "*", {
+	--[[
+		xpa jail <steamid/name/userid> <time>
+	]]
+
 	["jail"] = {
 		name = "Jail",
 		immunity = 1000,
@@ -58,6 +62,10 @@ return "Punishment", "*", {
 		end
 	},
 
+	--[[
+		xpa unjail <steamid/name/userid>
+	]]
+
 	["unjail"] = {
 		name = "UnJail",
 		immunity = 1000,
@@ -89,6 +97,10 @@ return "Punishment", "*", {
 		end
 	},
 
+	--[[
+		xpa ignite <steamid/name/userid> <time>
+	]]
+
 	["ignite"] = {
 		name = "Ignite",
 		immunity = 1000,
@@ -116,6 +128,10 @@ return "Punishment", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa unignite <steamid/name/userid>
+	]]
 
 	["unignite"] = {
 		name = "UnIgnite",
@@ -145,6 +161,10 @@ return "Punishment", "*", {
 		end
 	},
 
+	--[[
+		xpa slay <steamid/name/userid>
+	]]
+
 	["slay"] = {
 		name = "Slay",
 		immunity = 1000,
@@ -173,6 +193,10 @@ return "Punishment", "*", {
 		end
 	},
 
+	--[[
+		xpa freeze <steamid/name/userid>
+	]]
+
 	["freeze"] = {
 		name = "Freeze",
 		immunity = 1000,
@@ -200,6 +224,10 @@ return "Punishment", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa unfreeze <steamid/name/userid>
+	]]
 
 	["unfreeze"] = {
 		name = "UnFreeze",
