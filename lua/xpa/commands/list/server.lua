@@ -1,4 +1,8 @@
 return "Server", "*", {
+	--[[
+		xpa rcon <args>
+	]]
+
 	["rcon"] = {
 		name = "RCON",
 		icon = "icon16/server.png",
@@ -11,6 +15,10 @@ return "Server", "*", {
 		end
 	},
 
+	--[[
+		xpa map <map>
+	]]
+
 	["map"] = {
 		name = "Change map",
 		icon = "icon16/map.png",
@@ -22,6 +30,10 @@ return "Server", "*", {
 			RunConsoleCommand("changelevel", args[1] or "gm_flatgrass")
 		end
 	},
+
+	--[[
+		xpa maplist
+	]]
 
 	["maplist"] = {
 		name = "Map list",
@@ -45,6 +57,10 @@ return "Server", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa teamlist
+	]]
 
 	["teamlist"] = {
 		name = "Team list",
