@@ -1,4 +1,8 @@
 return "Communication", "*", {
+	--[[
+		xpa gag <steamid/name/userid>
+	]]
+
 	["gag"] = {
 		name = "Gag",
 		immunity = 1000,
@@ -63,6 +67,10 @@ return "Communication", "*", {
 		end
 	},
 
+	--[[
+		xpa ungag <steamid/name/userid>
+	]]
+
 	["ungag"] = {
 		name = "UnGag",
 		immunity = 1000,
@@ -118,6 +126,10 @@ return "Communication", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa mute <steamid/name/userid>
+	]]
 
 	["mute"] = {
 		name = "Mute",
@@ -182,6 +194,10 @@ return "Communication", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa unmute <steamid/name/userid>
+	]]
 
 	["unmute"] = {
 		name = "UnMute",
