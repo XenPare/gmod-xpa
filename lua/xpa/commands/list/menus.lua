@@ -1,4 +1,8 @@
 return "Menus", "*", {
+	--[[
+		xpa info
+	]]
+
 	["info"] = {
 		name = "Info",
 		icon = "icon16/help.png",
@@ -8,6 +12,10 @@ return "Menus", "*", {
 			XPA.SendMsg(pl, "XenPare Administration Experience " .. XPA.Version .. ", build from " .. XPA.Build .. " by " .. XPA.Author)
 		end
 	},
+
+	--[[
+		xpa bans
+	]]
 
 	["bans"] = {
 		name = "Ban list",
@@ -21,6 +29,10 @@ return "Menus", "*", {
 		end
 	},
 
+	--[[
+		xpa restrictions
+	]]
+
 	["restrictions"] = {
 		name = "Restrictions",
 		icon = "icon16/magnifier.png",
@@ -32,6 +44,10 @@ return "Menus", "*", {
 			net.Send(pl)
 		end
 	},
+
+	--[[
+		xpa menu
+	]]
 
 	["menu"] = {
 		name = "Menu",
