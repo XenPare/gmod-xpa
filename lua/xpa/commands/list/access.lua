@@ -1,4 +1,8 @@
 return "Server Access", "*", {
+	--[[
+		xpa ban <steamid/name/userid> <time> <reason>
+	]]
+
 	["ban"] = {
 		name = "Ban",
 		immunity = 1000,
@@ -45,6 +49,10 @@ return "Server Access", "*", {
 		end
 	},
 
+	--[[
+		xpa unban <steamid>
+	]]
+
 	["unban"] = {
 		name = "UnBan",
 		immunity = 10000,
@@ -68,6 +76,10 @@ return "Server Access", "*", {
 			end
 		end
 	},
+
+	--[[
+		xpa kick <steamid/name/userid>
+	]]
 
 	["kick"] = {
 		name = "Kick",
