@@ -1,4 +1,8 @@
 return "DarkRP", "darkrp", {
+	--[[
+		xpa hg <steamid/name/userid> <number>
+	]]
+
 	["hg"] = {
 		name = "Set hunger",
 		immunity = 1000,
@@ -22,6 +26,10 @@ return "DarkRP", "darkrp", {
 			XPA.AChatLog(pl:Name() .. " has changed " .. target:Name() .. "'s hunger to " .. number)
 		end
 	},
+
+	--[[
+		xpa setjob <steamid/name/userid> <number>
+	]]
 
 	["setjob"] = {
 		name = "Set job",
@@ -52,6 +60,10 @@ return "DarkRP", "darkrp", {
 		end
 	},
 
+	--[[
+		xpa arrest <steamid/name/userid> <number>
+	]]
+
 	["arrest"] = {
 		name = "Arrest",
 		immunity = 1000,
@@ -76,6 +88,10 @@ return "DarkRP", "darkrp", {
 		end
 	},
 
+	--[[
+		xpa unarrest <steamid/name/userid>
+	]]
+
 	["unarrest"] = {
 		name = "UnArrest",
 		immunity = 1000,
@@ -98,6 +114,10 @@ return "DarkRP", "darkrp", {
 			XPA.AChatLog(pl:Name() .. " has unarrested " .. target:Name())
 		end
 	},
+
+	--[[
+		xpa pban <steamid/name/userid>
+	]]
 
 	["pban"] = {
 		name = "Police Ban",
@@ -181,6 +201,10 @@ return "DarkRP", "darkrp", {
 			end
 		end,
 	},
+
+	--[[
+		xpa unpban <steamid/name/userid>
+	]]
 
 	["unpban"] = {
 		name = "Police UnBan",
