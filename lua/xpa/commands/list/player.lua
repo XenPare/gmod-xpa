@@ -1,4 +1,8 @@
 return "Player", "*", {
+	--[[
+		xpa hp <steamid/name/userid> <number>
+	]]
+
 	["hp"] = {
 		name = "Set health",
 		immunity = 1000,
@@ -23,6 +27,10 @@ return "Player", "*", {
 		end
 	},
 
+	--[[
+		xpa gethp <steamid/name/userid>
+	]]
+
 	["gethp"] = {
 		name = "Get health",
 		immunity = 1000,
@@ -43,6 +51,10 @@ return "Player", "*", {
 			XPA.SendMsg(pl, target:Name() .. " has got " .. pl:Health() .. " health.")
 		end
 	},
+
+	--[[
+		xpa ar <steamid/name/userid> <number>
+	]]
 
 	["ar"] = {
 		name = "Set armor",
@@ -72,6 +84,10 @@ return "Player", "*", {
 		end
 	},
 
+	--[[
+		xpa getar <steamid/name/userid>
+	]]
+
 	["getar"] = {
 		name = "Get armor",
 		immunity = 1000,
@@ -92,6 +108,10 @@ return "Player", "*", {
 			XPA.SendMsg(pl, target:Name() .. " has got " .. pl:Armor() .. " armor.")
 		end
 	},
+
+	--[[
+		xpa weapon <steamid/name/userid> <classname>
+	]]
 
 	["weapon"] = {
 		name = "Give weapon",
@@ -115,6 +135,10 @@ return "Player", "*", {
 		end
 	},
 
+	--[[
+		xpa noclip
+	]]
+
 	["noclip"] = {
 		name = "Noclip",
 		immunity = 1000,
@@ -129,6 +153,10 @@ return "Player", "*", {
 			pl:SetMoveType(type)
 		end
 	},
+
+	--[[
+		xpa cloak
+	]]
 
 	["cloak"] = {
 		name = "Cloak",
@@ -158,6 +186,10 @@ return "Player", "*", {
 			pl:ChatPrint(msg)
 		end
 	},
+
+	--[[
+		xpa fs <steamid/name/userid>
+	]]
 
 	["fs"] = {
 		name = "Fam. sharing",
