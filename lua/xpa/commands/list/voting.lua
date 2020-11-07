@@ -1,4 +1,8 @@
 return "Voting", "sandbox/groundcontrol/terrortown/classicjb", {
+	--[[
+		xpa votekick <steamid/name/userid>
+	]]
+
 	["votekick"] = {
 		name = "VoteKick",
 		icon = "icon16/user_delete.png",
@@ -46,6 +50,10 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb", {
 			end
 		end
 	},
+
+	--[[
+		xpa votemap <map>
+	]]
 
 	["votemap"] = {
 		name = "VoteMap",
