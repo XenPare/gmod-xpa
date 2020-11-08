@@ -30,6 +30,12 @@ hook.Add("Initialize", "XPA Command Register", function()
 					end
 				end
 			end
+			if data.check then
+				if not data.check() then
+					commands[key] = nil
+					continue
+				end
+			end
 			if data.init then
 				data.init()
 			end
