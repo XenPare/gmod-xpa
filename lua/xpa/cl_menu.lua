@@ -17,7 +17,7 @@ local function runCommand(target, key, cmd)
 		if cmd.string then
 			Derma_StringRequest(
 				cmd.name,
-						"Enter the required info",
+				"Enter the required info",
 				"",
 				function(str) 
 					RunConsoleCommand("xpa", key, str) 
@@ -33,27 +33,55 @@ local function runCommand(target, key, cmd)
 				"Enter the required info",
 				"",
 				function(str) 
-					if not IsValid(target) then
-						LocalPlayer():ChatPrint("Player has disconnected")
-						return
+					if istable(target) then
+						for _, pl in pairs(target) do
+							if not IsValid(pl) then
+								LocalPlayer():ChatPrint("One or more player has disconnected")
+								return
+							end
+							local id = pl:SteamID()
+							if pl:IsBot() then
+								id = pl:Name()
+							end
+							RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str))) 
+						end
+					else
+						if not IsValid(target) then
+							LocalPlayer():ChatPrint("Player has disconnected")
+							return
+						end
+						local id = target:SteamID()
+						if target:IsBot() then
+							id = target:Name()
+						end
+						RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str))) 
 					end
-					local id = target:SteamID()
-					if target:IsBot() then
-						id = target:Name()
-					end
-					RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str))) 
 				end
 			)
 		else
-			if not IsValid(target) then
-				LocalPlayer():ChatPrint("Player has disconnected")
-				return
+			if istable(target) then
+				for _, pl in pairs(target) do
+					if not IsValid(pl) then
+						LocalPlayer():ChatPrint("One or more player has disconnected")
+						return
+					end
+					local id = pl:SteamID()
+					if pl:IsBot() then
+						id = pl:Name()
+					end
+					RunConsoleCommand("xpa", key, id) 
+				end
+			else
+				if not IsValid(target) then
+					LocalPlayer():ChatPrint("Player has disconnected")
+					return
+				end
+				local id = target:SteamID()
+				if target:IsBot() then
+					id = target:Name()
+				end
+				RunConsoleCommand("xpa", key, id)
 			end
-			local id = target:SteamID()
-			if target:IsBot() then
-				id = target:Name()
-			end
-			RunConsoleCommand("xpa", key, id)
 		end
 	end
 end
@@ -73,31 +101,32 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 	back:SetText("Back")
 
 	back.DoClick = function()
-		panel:SetVisible(false)
+		panel:Remove()
 		list:SetVisible(true)
 	end
 
 	local scroll = vgui.Create("DScrollPanel", fill)
 	scroll:Dock(FILL)
 
+	local chosen, cfirst = {}, false
 	for id, team in pairs(team.GetAllTeams()) do
-		local list = vgui.Create("DCollapsibleCategory", scroll)
-		list:Dock(TOP)
-		list:SetLabel(team.Name)
-		list.Players = 0
+		local _list = vgui.Create("DCollapsibleCategory", scroll)
+		_list:Dock(TOP)
+		_list:SetLabel(team.Name)
+		_list.Players = 0
 
 		if #player.GetAll() >= 20 then
-			list:SetExpanded(false)
+			_list:SetExpanded(false)
 		end
 
-		local layout = vgui.Create("DIconLayout", list)
+		local layout = vgui.Create("DIconLayout", _list)
 		layout:Dock(FILL)
 		layout:SetSpaceY(1)
 		layout:SetSpaceX(1)
 
 		for _, pl in SortedPairs(player.GetAll()) do
 			if pl:Team() == id then
-				list.Players = list.Players + 1
+				_list.Players = _list.Players + 1
 
 				local player = layout:Add("DButton")
 				player:SetFont("Default")
@@ -107,16 +136,72 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 				if pl:IsAdmin() then
 					player:SetColor(color_admin)
 				end
-		
+
+				player.Think = function(self)
+					if IsValid(pl) then
+						return
+					end
+					if chosen[self] then
+						chosen[self] = nil
+					end
+					_list.Players = _list.Players - 1
+					if _list.Players <= 0 then
+						_list:Remove()
+					end
+					self:Remove()
+				end
+
 				player.DoClick = function()
 					runCommand(pl, key, cmd)
+				end
+
+				player.DoRightClick = function(self)
+					self:SetEnabled(false)
+					chosen[self] = pl
+
+					if cfirst then
+						return
+					end
+					cfirst = true
+
+					local run = vgui.Create("DButton", panel)
+					run:Dock(BOTTOM)
+					run:DockMargin(0, 4, 0, 0)
+					run:SetTall(32)
+					run:SetText("Run command")
+					run:SetToolTip("LMB to run command\nRMB to reset chosen players")
+				
+					run.Think = function(self)
+						if table.Count(chosen) > 0 then
+							return
+						end
+						self:Remove()
+						cfirst = false
+					end
+
+					run.DoClick = function()
+						local cpls = {}
+						for _, cpl in pairs(chosen) do
+							table.insert(cpls, cpl)
+						end
+						runCommand(cpls, key, cmd)
+					end
+
+					run.DoRightClick = function(self)
+						for button, _ in pairs(chosen) do
+							chosen[button] = nil
+							button:SetEnabled(true)
+						end
+						cfirst = false
+						self:Remove()
+					end
 				end
 			end
 		end
 
-		list:SetContents(layout)
-		if list.Players == 0 then
-			list:Remove()
+		_list:SetContents(layout)
+		if _list.Players == 0 then
+			_list:Remove()
 		end
 	end
 end
