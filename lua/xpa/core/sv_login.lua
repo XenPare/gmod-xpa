@@ -14,8 +14,8 @@ hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 	for rank, data in pairs(XPA.Ranks) do 
 		local members = data.members
 		if members and table.HasValue(members, id) then
-			pl:SetUserGroup(data.base)
-			XPA.MsgC(name .. ids .. "has logged with " .. data.title .. " rank.")
+			pl:SetUserGroup(rank)
+			XPA.MsgC(name .. ids .. "has logged with " .. pl:GetUserGroupTitle() .. " rank.")
 			found = true
 			break
 		end
@@ -26,7 +26,7 @@ hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 		http.Fetch("http://steamcommunity.com/gid/" .. group .. "/memberslistxml/?xml=1", function(body)
 			if body:match("<steamID64>" .. pl:SteamID64() .. "</steamID64>") then
 				pl:SetUserGroup("admin")
-				XPA.MsgC(name .. ids .. "has logged with Admin rank.")
+				XPA.MsgC(name .. ids .. "has logged with " .. pl:GetUserGroupTitle() .. " rank.")
 			end
 		end)
 	end
