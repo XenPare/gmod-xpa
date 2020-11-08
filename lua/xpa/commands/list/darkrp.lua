@@ -9,6 +9,9 @@ return "DarkRP", "darkrp", {
 		icon = "icon16/cup_add.png",
 		visible = true,
 		string = true,
+		check = function()
+			return not DarkRP.disabledDefaults["hungermod"]
+		end,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
 			if not IsValid(target) or not target:Alive() then
