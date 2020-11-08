@@ -43,9 +43,8 @@ end
 
 --[[
 	Alternatives
-	## XPA Builds under 08/11/20 has GetRankTitle method
-		thats why we add another possible method
-		to save some time
+	## XPA Builds under 08/11/20 are used to have an old GetRankTitle method
+		thats why we add another method to save some time
 ]]
 
 meta.GetRankTitle = meta.GetUserGroupTitle
