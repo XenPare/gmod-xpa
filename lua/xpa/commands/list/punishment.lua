@@ -106,6 +106,7 @@ return "Punishment", "*", {
 		immunity = 1000,
 		icon = "icon16/weather_sun.png",
 		visible = true,
+		string = true,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
 			if not IsValid(target) then
