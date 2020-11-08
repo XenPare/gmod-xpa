@@ -16,9 +16,7 @@ local db_link, db_key = XPA.Config.DBLink, XPA.Config.DBKey
 	})
 
 	XPA.DB.Write("xpa-ranks/founder", {
-		base = "superadmin",
-		immunity = 99999999,
-		title = "Founder",
+		immunity = 100000,
 		members = {
 			"STEAM_0:0:99753397",
 			"STEAM_0:0:53025026"
@@ -26,18 +24,18 @@ local db_link, db_key = XPA.Config.DBLink, XPA.Config.DBKey
 	})
 
 	XPA.DB.Write("xpa-ranks/supervisor", {
-		base = "superadmin",
 		immunity = 10000,
-		title = "Supervisor",
 		members = {
 			"STEAM_0:0:168580862"
 		}
 	})
 
+	XPA.DB.Write("xpa-ranks/superadmin", {
+		immunity = 5000,
+	})
+
 	XPA.DB.Write("xpa-ranks/admin", {
-		base = "admin",
 		immunity = 1000,
-		title = "Admin"
 	})
 ]]
 
