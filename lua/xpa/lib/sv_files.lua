@@ -1,4 +1,8 @@
-function XPA.AddDir(dir) -- ##materials/stuff/stuff2
+--[[
+	XPA.AddResourceDir(path/to/the/folder)
+]]
+
+function XPA.AddResourceDir(dir)
 	local files, dirs = file.Find(dir .. "/*", "GAME")
 	for _, fdir in pairs(dirs) do
 		if fdir ~= ".svn" then
