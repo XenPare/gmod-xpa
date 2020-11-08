@@ -9,7 +9,7 @@ return "Server", "*", {
 		--visible = true, -- pretty buggy
 		self = true,
 		string = true,
-		immunity = 99999999,
+		immunity = 100000,
 		func = function(pl, args)
 			RunConsoleCommand(unpack(args))
 		end
