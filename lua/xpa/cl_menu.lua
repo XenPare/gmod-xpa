@@ -108,7 +108,7 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 	local scroll = vgui.Create("DScrollPanel", fill)
 	scroll:Dock(FILL)
 
-	local chosen, cfirst = {}, false
+	local selected, cfirst = {}, false
 	for id, team in pairs(team.GetAllTeams()) do
 		local _list = vgui.Create("DCollapsibleCategory", scroll)
 		_list:Dock(TOP)
@@ -141,8 +141,8 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 					if IsValid(pl) then
 						return
 					end
-					if chosen[self] then
-						chosen[self] = nil
+					if selected[self] then
+						selected[self] = nil
 					end
 					_list.Players = _list.Players - 1
 					if _list.Players <= 0 then
@@ -157,7 +157,7 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 
 				player.DoRightClick = function(self)
 					self:SetEnabled(false)
-					chosen[self] = pl
+					selected[self] = pl
 
 					if cfirst then
 						return
@@ -169,10 +169,10 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 					run:DockMargin(0, 4, 0, 0)
 					run:SetTall(32)
 					run:SetText("Run command")
-					run:SetToolTip("LMB to run command\nRMB to reset chosen players")
+					run:SetToolTip("LMB to run command\nRMB to reset selected players")
 				
 					run.Think = function(self)
-						if table.Count(chosen) > 0 then
+						if table.Count(selected) > 0 then
 							return
 						end
 						self:Remove()
@@ -181,15 +181,15 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 
 					run.DoClick = function()
 						local cpls = {}
-						for _, cpl in pairs(chosen) do
+						for _, cpl in pairs(selected) do
 							table.insert(cpls, cpl)
 						end
 						runCommand(cpls, key, cmd)
 					end
 
 					run.DoRightClick = function(self)
-						for button, _ in pairs(chosen) do
-							chosen[button] = nil
+						for button, _ in pairs(selected) do
+							selected[button] = nil
 							button:SetEnabled(true)
 						end
 						cfirst = false
