@@ -66,6 +66,9 @@ return "Menus", "*", {
 					init[cmd] = nil
 					continue
 				end
+				if data.check then
+					data.check = nil
+				end
 				if data.init then
 					data.init = nil
 				end
