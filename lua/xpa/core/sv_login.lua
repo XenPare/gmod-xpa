@@ -1,3 +1,5 @@
+local group = XPA.Config.AdminGroupID
+
 hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 	local ip = string.Explode(":", pl:IPAddress())[1]
 	local id = pl:SteamID()
@@ -21,7 +23,6 @@ hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 		end
 	end
 
-	local group = XPA.Config.AdminGroupID
 	if not found and (group and group ~= "") then
 		http.Fetch("http://steamcommunity.com/gid/" .. group .. "/memberslistxml/?xml=1", function(body)
 			if body:match("<steamID64>" .. pl:SteamID64() .. "</steamID64>") then
