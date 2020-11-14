@@ -16,7 +16,9 @@ hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 	for rank, data in pairs(XPA.Ranks) do 
 		local members = data.members
 		if members and table.HasValue(members, id) then
-			pl:SetUserGroup(rank)
+			pl:SetSimpleTimer(0.8, function()
+				pl:SetUserGroup(rank)
+			end)
 			XPA.MsgC(name .. ids .. "has logged with " .. pl:GetUserGroupTitle() .. " rank.")
 			found = true
 			break
