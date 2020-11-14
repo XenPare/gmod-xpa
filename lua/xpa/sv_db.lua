@@ -41,73 +41,80 @@ local db_link, db_key = XPA.Config.DBLink, XPA.Config.DBKey
 
 XPA.DB = {}
 
-XPA.DB.Print = function(str)
-	MsgC("[XPA DB] ", color_white, str .. "\n")
-end
-
-XPA.DB.Read = function(path, meth)
-	if path == nil then
-		path = ".json"
-	else
-		path = "/" .. path .. ".json"
-	end
-
-	http.Fetch(db_link .. path, function(html)
-		meth(html)
-	end, 
-	function(err)
-		XPA.DB.Print("HTTP: " .. err)
-	end)
-end
-
-XPA.DB.Write = function(path, json)
-	assert(path and json, "Sending request: PATH or TABLE [NULL]")
-	path = "/" .. path .. ".json"
-
-	HTTP({
-		failed = function(err)
-			XPA.DB.Print("HTTP: " .. err)
-		end,
-		method = "PATCH",
-		url = db_link .. path .. "?auth=" .. db_key,
-		body = util.TableToJSON(json),
-		type = "application/json"
-	})
-end
-
-XPA.DB.Delete = function(path)
-	assert(path, "Sending request: PATH [NULL]")
-	path = "/" .. path .. ".json"
-
-	HTTP({
-		failed = function(err)
-			XPA.DB.Print("HTTP: " .. err)
-		end,
-
-		method = "DELETE",
-		url = db_link .. path .. "?auth=" .. db_key,
-		type = "application/json"
-	})
-end
+XPA.Ranks = {}
+XPA.Bans = {}
+XPA.Restrictions = {}
 
 --[[
-	XPA Stuff
+	Database core
 ]]
 
-XPA.Ranks = {}
-XPA.DB.Read("xpa-ranks", function(json)
-	XPA.Ranks = util.JSONToTable(json) 
+timer.Simple(0.5, function()
+	XPA.DB.Print = function(str)
+		MsgC("[XPA DB] ", color_white, str .. "\n")
+	end
+
+	XPA.DB.Read = function(path, meth)
+		if path == nil then
+			path = ".json"
+		else
+			path = "/" .. path .. ".json"
+		end
+
+		http.Fetch(db_link .. path, function(html)
+			meth(html)
+		end, 
+		function(err)
+			XPA.DB.Print("HTTP: " .. err)
+		end)
+	end
+
+	XPA.DB.Write = function(path, json)
+		assert(path and json, "Sending request: PATH or TABLE [NULL]")
+		path = "/" .. path .. ".json"
+
+		HTTP({
+			failed = function(err)
+				XPA.DB.Print("HTTP: " .. err)
+			end,
+			method = "PATCH",
+			url = db_link .. path .. "?auth=" .. db_key,
+			body = util.TableToJSON(json),
+			type = "application/json"
+		})
+	end
+
+	XPA.DB.Delete = function(path)
+		assert(path, "Sending request: PATH [NULL]")
+		path = "/" .. path .. ".json"
+
+		HTTP({
+			failed = function(err)
+				XPA.DB.Print("HTTP: " .. err)
+			end,
+
+			method = "DELETE",
+			url = db_link .. path .. "?auth=" .. db_key,
+			type = "application/json"
+		})
+	end
+
+	XPA.DB.Read("xpa-ranks", function(json)
+		XPA.Ranks = util.JSONToTable(json) 
+	end)
+
+	XPA.DB.Read("xpa-bans", function(json)
+		XPA.Bans = util.JSONToTable(json) 
+	end)
+
+	XPA.DB.Read("xpa-restrictions", function(json)
+		XPA.Restrictions = util.JSONToTable(json) 
+	end)
 end)
 
-XPA.Bans = {}
-XPA.DB.Read("xpa-bans", function(json)
-	XPA.Bans = util.JSONToTable(json) 
-end)
-
-XPA.Restrictions = {}
-XPA.DB.Read("xpa-restrictions", function(json)
-	XPA.Restrictions = util.JSONToTable(json) 
-end)
+--[[
+	Restrictions validation
+]]
 
 hook.Add("PlayerInitialSpawn", "XPA Restrictions", function(pl)
 	local id = pl:SteamID()
