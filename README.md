@@ -72,36 +72,36 @@ xpa unpban <steamid/name/uid>
 
 # Library
 ```lua
-XPA.IncludeCompounded(STRING path) > Shared
-XPA.AddResourceDir(STRING path) > Server
+SHARED XPA.IncludeCompounded(STRING path)
+SERVER XPA.AddResourceDir(STRING path)
 ```
 ```lua
-XPA.FindPlayer(STRING steamid/ STRING name/ INTEGER uid) > Shared
-XPA.FindBiggest(TABLE numbers) > Shared
+SHARED XPA.FindPlayer(STRING steamid / STRING name / INTEGER uid)
+SHARED XPA.FindBiggest(TABLE numbers)
 ```
 ```lua
-XPA.isEmpty(VECTOR pos, VECTOR ignore) > Shared
-XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) > Shared
+SHARED XPA.isEmpty(VECTOR pos, VECTOR ignore)
+SHARED XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area)
 ```
 ```lua
-XPA.nickSortedPlayers() > Shared
-XPA.ParseArgs(STRING str) > Shared
-XPA.ConvertTime(INTEGER time, INTEGER limit) > Shared
-XPA.TimeToSTRING(INTEGER time) > Shared
+SHARED XPA.nickSortedPlayers()
+SHARED XPA.ParseArgs(STRING str)
+SHARED XPA.ConvertTime(INTEGER time, INTEGER limit)
+SHARED XPA.TimeToSTRING(INTEGER time)
 ```
 ```lua
-XPA.IsValidSteamID(STRING id) > Shared
-XPA.IsValidSteamID64(STRING id) > Shared
+SHARED XPA.IsValidSteamID(STRING id)
+SHARED XPA.IsValidSteamID64(STRING id)
 ```
 ```lua
-XPA.MsgC(STRING msg) > Server
-XPA.ChatLog(STRING msg) > Server
-XPA.AChatLog(STRING msg) > Server
-XPA.ChatLogCompounded(STRING adminmsg, STRING usermsg) > Server
-XPA.SendMsg(ENTITY pl, STRING msg) > Server
+SERVER XPA.MsgC(STRING msg)
+SERVER XPA.ChatLog(STRING msg)
+SERVER XPA.AChatLog(STRING msg)
+SERVER XPA.ChatLogCompounded(STRING adminmsg, STRING usermsg)
+SERVER XPA.SendMsg(ENTITY pl, STRING msg)
 ```
 ```lua
-XPA.Ban(STRING id, INTEGER time, STRING reason)
-XPA.Unban(STRING id)
-XPA.IsBanned(STRING id)
+SERVER XPA.Ban(STRING id, INTEGER time, STRING reason)
+SERVER XPA.Unban(STRING id)
+SERVER XPA.IsBanned(STRING id)
 ```
