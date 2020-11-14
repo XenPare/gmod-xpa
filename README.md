@@ -9,7 +9,7 @@ xpa restrictions
 ### Access
 ```
 xpa ban <steamid/name/uid>
-xpa unban <steamid>
+xpa unban <steamid/name/uid>
 xpa kick <steamid/name/uid>
 ```
 ### Communication
@@ -48,8 +48,8 @@ xpa unfreeze <steamid/name/uid>
 ```
 ### Server
 ```
-xpa rcon <args>
-xpa map <map>
+xpa rcon <...>
+xpa map <mapname>
 xpa maplist
 xpa teamlist
 ```
@@ -57,13 +57,13 @@ xpa teamlist
 ##### sandbox/groundcontrol/terrortown/classicjb
 ```
 xpa votekick <steamid/name/uid>
-xpa votemap <mapname>
+xpa votemap <STRING mapname>
 ```
 ### DarkRP
 ##### darkrp
 ```
 xpa hg <steamid/name/uid> <number>
-xpa setjob <steamid/name/uid> <team index>
+xpa setjob <steamid/name/uid> <team>
 xpa arrest <steamid/name/uid> <time>
 xpa unarrest <steamid/name/uid>
 xpa pban <steamid/name/uid>
@@ -72,31 +72,36 @@ xpa unpban <steamid/name/uid>
 
 # Library
 ```lua
-XPA.IncludeCompounded(path) > Shared
-XPA.AddResourceDir(path) > Server
+XPA.IncludeCompounded(STRING path) > Shared
+XPA.AddResourceDir(STRING path) > Server
 ```
 ```lua
-XPA.FindPlayer(steamid/name/uid) > Shared
-XPA.FindBiggest(table num) > Shared
+XPA.FindPlayer(STRING steamid/ STRING name/ INTEGER uid) > Shared
+XPA.FindBiggest(TABLE numbers) > Shared
 ```
 ```lua
-XPA.isEmpty(vector, ignore) > Shared
-XPA.findEmptyPos(pos, ignore, distance, step, area) > Shared
+XPA.isEmpty(VECTOR pos, VECTOR ignore) > Shared
+XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) > Shared
 ```
 ```lua
 XPA.nickSortedPlayers() > Shared
-XPA.ParseArgs(str) > Shared
-XPA.ConvertTime(num, limit) > Shared
-XPA.TimeToStr(time) > Shared
+XPA.ParseArgs(STRING str) > Shared
+XPA.ConvertTime(INTEGER time, INTEGER limit) > Shared
+XPA.TimeToSTRING(INTEGER time) > Shared
 ```
 ```lua
-XPA.IsValidSteamID(id) > Shared
-XPA.IsValidSteamID64(id) > Shared
+XPA.IsValidSteamID(STRING id) > Shared
+XPA.IsValidSteamID64(STRING id) > Shared
 ```
 ```lua
-XPA.MsgC(str) > Server
-XPA.ChatLog(str) > Server
-XPA.AChatLog(str) > Server
-XPA.ChatLogCompounded(astr, ustr) > Server
-XPA.SendMsg(pl, msg) > Server
+XPA.MsgC(STRING msg) > Server
+XPA.ChatLog(STRING msg) > Server
+XPA.AChatLog(STRING msg) > Server
+XPA.ChatLogCompounded(STRING adminmsg, STRING usermsg) > Server
+XPA.SendMsg(ENTITY pl, STRING msg) > Server
+```
+```lua
+XPA.Ban(STRING id, INTEGER time, STRING reason)
+XPA.Unban(STRING id)
+XPA.IsBanned(STRING id)
 ```
