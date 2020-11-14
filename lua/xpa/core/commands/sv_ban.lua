@@ -1,7 +1,7 @@
 XPA.Bans = XPA.Bans or {}
 
 --[[
-	Ban (Target ID, Ban Time, Ban reason)
+	XPA.Ban (Target ID, Ban Time, Ban reason)
 ]]
 
 function XPA.Ban(id, time, reason)
@@ -71,7 +71,7 @@ function XPA.Ban(id, time, reason)
 end
 
 --[[
-	UnBan (Target ID)
+	XPA.Unban (Target ID)
 ]]
 
 function XPA.Unban(id)
@@ -85,6 +85,17 @@ function XPA.Unban(id)
 			XPA.MsgC(id .. " has been unbanned.")
 		end
 	end)
+end
+
+--[[
+	XPA.IsBanned (SteamID)
+]]
+
+function XPA.IsBanned(id)
+	if XPA.Bans[id] then
+		return true, XPA.Bans[id]
+	end
+	return false
 end
 
 --[[
@@ -114,8 +125,8 @@ end)
 
 hook.Add("CheckPassword", "XPA Bans", function(id64)
 	local id = util.SteamIDFrom64(id64)
-	local ban = XPA.Bans[id]
-	if ban then
+	local banned, ban = XPA.IsBanned(id)
+	if banned then
 		local time = ban.time
 		if time > 0 then
 			if os.time() >= time then
