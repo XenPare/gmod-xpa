@@ -14,33 +14,19 @@ return "Menus", "*", {
 	},
 
 	--[[
-		xpa bans
+		xpa finder
 	]]
 
-	["bans"] = {
-		name = "Ban list",
+	["finder"] = {
+		name = "Finder",
 		icon = "icon16/magnifier.png",
 		visible = true,
 		self = true,
 		func = function(pl)
-			net.Start("XPA Ban List")
-				net.WriteTable(XPA.Bans)
-			net.Send(pl)
-		end
-	},
-
-	--[[
-		xpa restrictions
-	]]
-
-	["restrictions"] = {
-		name = "Restrictions",
-		icon = "icon16/magnifier.png",
-		visible = true,
-		self = true,
-		func = function(pl)
-			net.Start("XPA Restrictions List")
+			net.Start("XPA Finder")
+				net.WriteTable(XPA.Playtime)
 				net.WriteTable(XPA.Restrictions)
+				net.WriteTable(XPA.Bans)
 			net.Send(pl)
 		end
 	},

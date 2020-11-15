@@ -3,8 +3,7 @@
 ```
 xpa info
 xpa menu
-xpa bans
-xpa restrictions
+xpa finder
 ```
 ### Access
 ```

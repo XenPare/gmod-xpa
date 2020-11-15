@@ -9,9 +9,7 @@ if SERVER then
 	include("xpa/lib/_include.lua")
 
 	util.AddNetworkString("XPA Menu") -- xpa/cl_menu.lua
-	util.AddNetworkString("XPA Ban Form") -- xpa/core/menus/cl_banform.lua
-	util.AddNetworkString("XPA Ban List") -- xpa/core/menus/cl_banlist.lua
-	util.AddNetworkString("XPA Restrictions List") -- xpa/core/menus/cl_restrictions.lua
+	util.AddNetworkString("XPA Finder") -- xpa/core/menus/cl_finder.lua
 else
 	include("xpa/lib/_include.lua")
 end

@@ -5,6 +5,11 @@ local db_link, db_key = XPA.Config.DBLink, XPA.Config.DBKey
 	#### DB Initialization base
 	####
 
+	XPA.DB.Write("xpa-playtime/STEAM_0:0:11101", {
+		name = "Gabe Newell",
+		time = 60
+	})
+
 	XPA.DB.Write("xpa-bans/STEAM_0:0:11101", {
 		time = 0,
 		reason = "you had to be the first"
@@ -41,6 +46,7 @@ local db_link, db_key = XPA.Config.DBLink, XPA.Config.DBKey
 
 XPA.DB = {}
 
+XPA.Playtime = {}
 XPA.Ranks = {}
 XPA.Bans = {}
 XPA.Restrictions = {}
@@ -99,6 +105,10 @@ timer.Simple(0.5, function()
 		})
 	end
 
+	XPA.DB.Read("xpa-playtime", function(json)
+		XPA.Playtime = util.JSONToTable(json) 
+	end)
+
 	XPA.DB.Read("xpa-ranks", function(json)
 		XPA.Ranks = util.JSONToTable(json) 
 	end)
@@ -110,28 +120,4 @@ timer.Simple(0.5, function()
 	XPA.DB.Read("xpa-restrictions", function(json)
 		XPA.Restrictions = util.JSONToTable(json) 
 	end)
-end)
-
---[[
-	Restrictions validation
-]]
-
-hook.Add("PlayerInitialSpawn", "XPA Restrictions", function(pl)
-	local id = pl:SteamID()
-	local tbl = XPA.Restrictions[id]
-	if tbl then
-		local useless = true
-		for _, data in pairs(tbl) do
-			if data then
-				useless = false
-			end
-		end
-		if useless then
-			XPA.Restrictions[id] = nil
-			XPA.DB.Delete("xpa-restrictions/" .. id)
-			return
-		end
-		pl:SetNWBool("XPA Mute", tbl.mute)
-		pl:SetNWBool("XPA Gag", tbl.gag)
-	end
 end)
