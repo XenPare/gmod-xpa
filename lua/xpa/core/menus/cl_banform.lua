@@ -1,20 +1,20 @@
 function XPA.BanForm(pl)
 	local name = pl:Name()
 
-	local Frame = vgui.Create("DFrame")
-	Frame:SetTitle("Ban " .. name)
-	Frame:SetSize(300, 128)
-	Frame:Center()
-	Frame:MakePopup()
-	Frame:SetPaintBackgroundEnabled(true)
+	local fr = vgui.Create("DFrame")
+	fr:SetTitle("Ban " .. name)
+	fr:SetSize(300, 128)
+	fr:Center()
+	fr:MakePopup()
+	fr:SetPaintBackgroundEnabled(true)
 
-	local Time = vgui.Create("DTextEntry", Frame)
-	Time:Dock(TOP)
-	Time:DockMargin(0, 1, 0, 1)
-	Time:SetTall(28)
-	Time:SetText("1440")
+	local time = vgui.Create("DTextEntry", fr)
+	time:Dock(TOP)
+	time:DockMargin(0, 1, 0, 1)
+	time:SetTall(28)
+	time:SetText("1440")
 
-	Time.Think = function(self, w, h) 
+	time.Think = function(self, w, h) 
 		if self:IsEditing() and self:GetValue() == "1440" then
 			self:SetText("")
 		end
@@ -23,13 +23,13 @@ function XPA.BanForm(pl)
 		end
 	end
 
-	local Reason = vgui.Create("DTextEntry", Frame)
-	Reason:Dock(TOP)
-	Reason:DockMargin(0, 1, 0, 1)
-	Reason:SetTall(28)
-	Reason:SetText("Enter the reason")
+	local reason = vgui.Create("DTextEntry", fr)
+	reason:Dock(TOP)
+	reason:DockMargin(0, 1, 0, 1)
+	reason:SetTall(28)
+	reason:SetText("Enter the reason")
 
-	Reason.Think = function(self) 
+	reason.Think = function(self) 
 		if self:IsEditing() and self:GetValue() == "Enter the reason" then
 			self:SetText("")
 		end
@@ -38,16 +38,16 @@ function XPA.BanForm(pl)
 		end
 	end
 
-	local Go = vgui.Create("DButton", Frame)
-	Go:SetText("Ban " .. name)
-	Go:Dock(BOTTOM)
+	local ban = vgui.Create("DButton", fr)
+	ban:SetText("Ban " .. name)
+	ban:Dock(BOTTOM)
 
-	Go.Think = function(self)
-		if tonumber(Time:GetValue()) then
+	ban.Think = function(self)
+		if tonumber(time:GetValue()) then
 			if not self:IsEnabled() then
 				self:SetEnabled(true)
 			end
-			self:SetText("Ban " .. name .. " for " .. XPA.ConvertTime(Time:GetValue() * 60))
+			self:SetText("Ban " .. name .. " for " .. XPA.ConvertTime(time:GetValue() * 60))
 		else
 			if self:IsEnabled() then
 				self:SetEnabled(false)
@@ -55,7 +55,7 @@ function XPA.BanForm(pl)
 			self:SetText("Ban " .. name .. " for " .. "???")
 		end
 
-		if Reason:GetValue() == "" or Reason:GetValue() == "Enter the reason" then
+		if reason:GetValue() == "" or reason:GetValue() == "Enter the reason" then
 			if self:IsEnabled() then
 				self:SetEnabled(false)
 			end
@@ -66,8 +66,8 @@ function XPA.BanForm(pl)
 		end
 	end
 
-	Go.DoClick = function()
-		Frame:Remove()
-		RunConsoleCommand("xpa", "ban", pl:SteamID(), Time:GetValue(), Reason:GetValue())
+	ban.DoClick = function()
+		fr:Remove()
+		RunConsoleCommand("xpa", "ban", pl:SteamID(), time:GetValue(), Reason:GetValue())
 	end
 end
