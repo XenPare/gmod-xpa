@@ -18,8 +18,8 @@ hook.Add("PlayerInitialSpawn", "XPA Login", function(pl)
 		if members and table.HasValue(members, id) then
 			pl:SetSimpleTimer(0.8, function()
 				pl:SetUserGroup(rank)
+				XPA.MsgC(name .. ids .. "has logged with " .. pl:GetUserGroupTitle() .. " rank.")
 			end)
-			XPA.MsgC(name .. ids .. "has logged with " .. pl:GetUserGroupTitle() .. " rank.")
 			found = true
 			break
 		end
