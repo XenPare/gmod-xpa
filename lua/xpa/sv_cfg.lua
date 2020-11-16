@@ -9,3 +9,11 @@ XPA.Config.SteamAPIKey = ""
 
 XPA.Config.DBLink = "https://xenpare-db.firebaseio.com/"
 XPA.Config.DBKey = ""
+
+XPA.Config.Prefix = "[!|/|%.]"
+
+XPA.Config.SelfArgs = {
+	["me"] = true,
+	["self"] = true,
+	["^"] = true
+}

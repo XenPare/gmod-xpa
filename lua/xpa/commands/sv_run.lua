@@ -1,4 +1,5 @@
 local commands = XPA.Commands or {}
+local selfargs = XPA.Config.SelfArgs
 concommand.Add("xpa", function(pl, cmd, args)
 	local command = commands[args[1]]
 	if not command then
@@ -6,11 +7,9 @@ concommand.Add("xpa", function(pl, cmd, args)
 	end
 
 	if command.immunity then
-		if IsValid(pl) then
-			if pl:GetImmunity() < command.immunity then
-				pl:ChatPrint("No access")
-				return
-			end
+		if IsValid(pl) and pl:GetImmunity() < command.immunity then
+			pl:ChatPrint("No access")
+			return
 		end
 	end
 
@@ -18,19 +17,22 @@ concommand.Add("xpa", function(pl, cmd, args)
 	table.remove(nargs, 1)
 
 	for k, arg in pairs(nargs) do
-		if arg == "me" or arg == "^" then
+		if selfargs[arg] then
 			nargs[k] = pl:Name()
 		end
 	end
+
 	command.func(IsValid(pl) and pl or nil, nargs)
-	if #nargs == 0 then
-		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command with no args')
-	else
-		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command with args: ' .. table.ToString(nargs))
+
+	local argstring = "with no args"
+	if #nargs > 0 then
+		argstring = "with args: " .. table.ToString(nargs)
 	end
+
+	XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
 end)
 
-local prefix = "[!|/|%.]"
+local prefix = XPA.Config.Prefix
 hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 	local cmd = string.match(text, prefix .. "(.-) ") or string.match(text, prefix .. "(.+)") or ""
 	local line = string.match(text, prefix .. ".- (.+)")
@@ -38,21 +40,19 @@ hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 
 	local command = commands[cmd]
 	if command and IsValid(pl) then
-		if command.immunity then
-			if pl:GetImmunity() < command.immunity then
-				pl:ChatPrint("No access")
-				if not pl:IsMuted() then
-					return text
-				else
-					return ""
-				end
+		if command.immunity and pl:GetImmunity() < command.immunity then
+			pl:ChatPrint("No access")
+			if not pl:IsMuted() then
+				return text
+			else
+				return ""
 			end
 		end
 
 		local args = line and XPA.ParseArgs(line) or {}
 		if #args > 0 then
 			for k, arg in pairs(args) do
-				if arg == "me" or arg == "^" then
+				if selfargs[arg] then
 					args[k] = pl:Name()
 				end
 			end
@@ -60,11 +60,12 @@ hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 
 		command.func(IsValid(pl) and pl or nil, args)
 
-		if #args == 0 then
-			XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command with no args')
-		else
-			XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command with args: ' .. table.ToString(args))
+		local argstring = "with no args"
+		if #args > 0 then
+			argstring = "with args: " .. table.ToString(args)
 		end
+
+		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
 		return text
 	end
 end)
