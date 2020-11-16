@@ -4,7 +4,7 @@ XPA.Bans = XPA.Bans or {}
 	XPA.Ban (Target ID, Ban Time, Ban reason)
 ]]
 
-function XPA.Ban(id, time, reason)
+function XPA.Ban(id, time, reason, banner)
 	time = time or 0
 	if time > 0 then
 		time = (time * 60) + os.time()
@@ -19,28 +19,40 @@ function XPA.Ban(id, time, reason)
 		if not IsEntity(id) then
 			pl = XPA.FindPlayer(id)
 		end
-		if IsValid(pl) then
-			local preview = "∞"
-			if time > 0 then
-				preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
-			end
-	
-			local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
-			-- Local DB Integration
-			XPA.Bans[idv] = {
-				time = time,
-				reason = reason
-			}
 
-			-- DB Integration
-			XPA.DB.Write("xpa-bans/" .. idv, {
-				time = time,
-				reason = reason
-			})
-	
-			pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
-			XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
+		if not IsValid(pl) then
+			return
 		end
+
+		local preview = "∞"
+		if time > 0 then
+			preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
+		end
+
+		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
+		-- Local DB Integration
+		XPA.Bans[idv] = {
+			time = time,
+			reason = reason
+		}
+
+		-- DB Integration
+		XPA.DB.Write("xpa-bans/" .. idv, {
+			time = time,
+			reason = reason
+		})
+
+		-- Patch the banner
+		if banner and banner ~= nil then
+			local bannerid = IsValid(banner) and banner:SteamID() or banner
+			XPA.Bans[idv].banner = bannerid
+			XPA.DB.Write("xpa-bans/" .. idv, {
+				banner = bannerid
+			})
+		end
+
+		pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
+		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
 	else
 		-- Local DB Integration
 		XPA.Bans[id] = {
@@ -54,19 +66,29 @@ function XPA.Ban(id, time, reason)
 			reason = reason
 		})
 
+		-- Patch the banner
+		if banner and banner ~= nil then
+			local bannerid = IsValid(banner) and banner:SteamID() or banner
+			XPA.Bans[id].banner = bannerid
+			XPA.DB.Write("xpa-bans/" .. id, {
+				banner = bannerid
+			})
+		end
+
 		local pl = XPA.FindPlayer(id)
-		if IsValid(pl) then
-			local preview = "∞"
-			if time > 0 then
-				preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
-			end
-	
-			local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
-			pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
-			XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
+		if not IsValid(pl) then
+			XPA.MsgC(id .. " has been banned: " .. reason .. ".")
 			return
 		end
-		XPA.MsgC(id .. " has been banned: " .. reason .. ".")
+
+		local preview = "∞"
+		if time > 0 then
+			preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
+		end
+
+		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
+		pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
+		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
 	end
 end
 

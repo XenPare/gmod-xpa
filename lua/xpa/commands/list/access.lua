@@ -26,7 +26,7 @@ return "Server Access", "*", {
 				end
 			end
 
-			XPA.Ban(target, time, reason)
+			XPA.Ban(target, time, reason, pl)
 
 			if IsEntity(target) and IsValid(target) then
 				local str = " has banned " .. target:Name() .. " for: " .. reason
