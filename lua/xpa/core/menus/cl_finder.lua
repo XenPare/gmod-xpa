@@ -1,8 +1,5 @@
 local function addPlayers(tbl, parent)
-	local panel = vgui.Create("DPanel", parent)
-	panel:Dock(FILL)
-
-	local list = vgui.Create("DListView", panel)
+	local list = vgui.Create("DListView", parent)
 	list:Dock(FILL)
 	list:SetMultiSelect(false)
 
@@ -10,9 +7,12 @@ local function addPlayers(tbl, parent)
 	list:AddColumn("Name")
 	list:AddColumn("Played")
 
-	local search = vgui.Create("DTextEntry", panel)
-	search:Dock(TOP)
-	search:SetTall(26)
+	local search_panel = vgui.Create("EditablePanel", parent)
+	search_panel:Dock(TOP)
+	search_panel:SetTall(26)
+
+	local search = vgui.Create("DTextEntry", search_panel)
+	search:Dock(FILL)
 	search:SetText("")
 	search:SetPlaceholderText(table.Count(tbl) .. " players found")
 
@@ -44,8 +44,6 @@ local function addPlayers(tbl, parent)
 	list.OnRowSelected = function(_, _, row)
 		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
 	end
-
-	return panel
 end
 
 local function addRestrictions(tbl, parent)
@@ -54,10 +52,7 @@ local function addRestrictions(tbl, parent)
 		isdrp = true
 	end
 
-	local panel = vgui.Create("DPanel", parent)
-	panel:Dock(FILL)
-
-	local list = vgui.Create("DListView", panel)
+	local list = vgui.Create("DListView", parent)
 	list:Dock(FILL)
 	list:SetMultiSelect(false)
 
@@ -68,9 +63,12 @@ local function addRestrictions(tbl, parent)
 		list:AddColumn("Police Ban")
 	end
 
-	local search = vgui.Create("DTextEntry", panel)
-	search:Dock(TOP)
-	search:SetTall(26)
+	local search_panel = vgui.Create("EditablePanel", parent)
+	search_panel:Dock(TOP)
+	search_panel:SetTall(26)
+
+	local search = vgui.Create("DTextEntry", search_panel)
+	search:Dock(FILL)
 	search:SetText("")
 	search:SetPlaceholderText(table.Count(tbl) .. " restricted players found")
 
@@ -115,15 +113,10 @@ local function addRestrictions(tbl, parent)
 	list.OnRowSelected = function(_, _, row)
 		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
 	end
-
-	return panel
 end
 
 local function addBans(tbl, parent)
-	local panel = vgui.Create("DPanel", parent)
-	panel:Dock(FILL)
-
-	local list = vgui.Create("DListView", panel)
+	local list = vgui.Create("DListView", parent)
 	list:Dock(FILL)
 	list:SetMultiSelect(false)
 
@@ -131,9 +124,12 @@ local function addBans(tbl, parent)
 	list:AddColumn("Remaining")
 	list:AddColumn("Reason")
 
-	local search = vgui.Create("DTextEntry", panel)
-	search:Dock(TOP)
-	search:SetTall(26)
+	local search_panel = vgui.Create("EditablePanel", parent)
+	search_panel:Dock(TOP)
+	search_panel:SetTall(26)
+
+	local search = vgui.Create("DTextEntry", search_panel)
+	search:Dock(FILL)
 	search:SetText("")
 	search:SetPlaceholderText(table.Count(tbl) .. " bans found")
 
@@ -167,8 +163,6 @@ local function addBans(tbl, parent)
 	list.OnRowSelected = function(_, _, row)
 		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
 	end
-
-	return panel
 end
 
 net.Receive("XPA Finder", function()
@@ -195,13 +189,16 @@ net.Receive("XPA Finder", function()
 		if self:GetFraction() == 1 then
 			self:Remove()
 
-			local playtime = addPlayers(players, sheet)
+			local playtime = vgui.Create("DPanel", sheet)
+			addPlayers(players, playtime)
 			sheet:AddSheet("Players", playtime, "icon16/zoom.png")
 
-			local restrictions = addRestrictions(restricted, sheet)
+			local restrictions = vgui.Create("DPanel", sheet)
+			addRestrictions(restricted, restrictions)
 			sheet:AddSheet("Restrictions", restrictions, "icon16/delete.png")
 
-			local bans = addBans(banned, sheet)
+			local bans = vgui.Create("DPanel", sheet)
+			addBans(banned, bans)
 			sheet:AddSheet("Bans", bans, "icon16/lock.png")
 		end
 		self:SetFraction(Lerp(SysTime() - start, 0, 1))
