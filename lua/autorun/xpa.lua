@@ -1,7 +1,7 @@
 XPA = XPA or {}
 
 XPA.Version = "4.0"
-XPA.Build = "08/11/20"
+XPA.Build = "17/11/20"
 XPA.Author = "crester"
 
 AddCSLuaFile("xpa/lib/_include.lua")
