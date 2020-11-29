@@ -57,3 +57,10 @@ function XPA.GetCommandCategories()
 	end
 	return tbl
 end
+
+function XPA.AddCommand(name, data)
+	if data.init then
+		data.init()
+	end
+	XPA.Commands[name] = data
+end
