@@ -1,4 +1,4 @@
-return "Voting", "sandbox/groundcontrol/terrortown/classicjb", {
+return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 	--[[
 		xpa votekick <steamid/name/userid>
 	]]
@@ -61,7 +61,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb", {
 		visible = true,
 		string = true,
 		self = true,
-		gamemode = "groundcontrol/terrortown",
+		gamemode = "groundcontrol/terrortown/fbl",
 		init = function()
 			XPA.Commands.VoteMaps = XPA.Commands.VoteMaps or {}
 			local maps = XPA.MapList
