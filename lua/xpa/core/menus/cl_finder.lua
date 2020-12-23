@@ -30,7 +30,7 @@ local function addPlayers(tbl, parent)
 		else
 			for sid, v in pairs(tbl) do
 				local name = v.name
-				if sid:found(id) or name:found(id) then
+				if sid:find(id) or name:lower():find(id:lower()) then
 					list:AddLine(sid, name, XPA.ConvertTime(v.time))
 				end
 			end
@@ -99,7 +99,7 @@ local function addRestrictions(tbl, parent)
 			end
 		else
 			for sid, v in pairs(tbl) do
-				if string.find(sid, id) then
+				if sid:find(id) then
 					insert(sid, v)
 				end
 			end
@@ -148,7 +148,7 @@ local function addBans(tbl, parent)
 		else
 			for sid, v in pairs(tbl) do
 				local time, reason = tonumber(v.time), v.reason
-				if string.find(sid, id) or string.find(reason, id) then
+				if sid:find(id) or reason:lower():find(id:lower()) then
 					list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", reason)
 				end
 			end
