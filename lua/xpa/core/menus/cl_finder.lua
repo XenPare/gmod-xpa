@@ -143,13 +143,13 @@ local function addBans(tbl, parent)
 		if id == "" then
 			for sid, v in pairs(tbl) do
 				local time = tonumber(v.time)
-				list:AddLine(sid, time > 0 and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "∞", v.reason)
+				list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason)
 			end
 		else
 			for sid, v in pairs(tbl) do
 				local time, reason = tonumber(v.time), v.reason
 				if string.find(sid, id) or string.find(reason, id) then
-					list:AddLine(sid, time > 0 and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "∞", reason)
+					list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", reason)
 				end
 			end
 		end
@@ -157,7 +157,7 @@ local function addBans(tbl, parent)
 
 	for sid, v in pairs(tbl) do
 		local time = tonumber(v.time)
-		list:AddLine(sid, time > 0 and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "∞", v.reason)
+		list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason)
 	end
 
 	list.OnRowSelected = function(_, _, row)
