@@ -53,7 +53,7 @@ xpa maplist
 xpa teamlist
 ```
 ### Voting 
-##### sandbox/groundcontrol/terrortown/classicjb
+##### sandbox/groundcontrol/terrortown/classicjb/fbl
 ```
 xpa votekick <steamid/name/uid>
 xpa votemap <STRING mapname>
