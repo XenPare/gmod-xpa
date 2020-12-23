@@ -25,6 +25,11 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
+			if target == pl then
+				XPA.SendMsg(pl, "You can't kick yourself")
+				return
+			end
+
 			if not XPA.Commands.VoteKicks[target] then
 				XPA.Commands.VoteKicks[target] = {
 					voted = 0,
@@ -40,7 +45,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 			XPA.Commands.VoteKicks[target].voted = XPA.Commands.VoteKicks[target].voted + 1
 			table.insert(XPA.Commands.VoteKicks[target].voters, pl)
 
-			local required = math.Round(#player.GetAll() / 2)
+			local required = math.Round(#player.GetAll() / 2) + 1
 			local str = " has voted for the kick of " .. target:Name() .. " (" .. XPA.Commands.VoteKicks[target].voted .. "/" .. required .. " remains)"
 			XPA.ChatLogCompounded(pl:Name() .. str, pl:Name() .. str)
 
