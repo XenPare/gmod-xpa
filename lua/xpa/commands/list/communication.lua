@@ -18,7 +18,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and (not XPA.IsValidSteamID(target) and IsValid(target)) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
@@ -86,7 +86,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and (not XPA.IsValidSteamID(target) and IsValid(target)) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
@@ -146,7 +146,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and (not XPA.IsValidSteamID(target) and IsValid(target)) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
@@ -221,7 +221,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and (not XPA.IsValidSteamID(target) and IsValid(target)) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
