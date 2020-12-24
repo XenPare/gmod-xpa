@@ -72,7 +72,7 @@ return "Moving", "*", {
 			pl.ReturnPos = pl:GetPos()
 			pl:SetPos(XPA.findEmptyPos(target:GetPos(), {pl}, 600, 30, Vector(16, 16, 64)))
 
-			XPA.AChatLog(pl:Name() .. " has been teleported to " .. target:Name())
+			XPA.AChatLog(pl:Name() .. " has teleported to " .. target:Name())
 		end
 	},
 
