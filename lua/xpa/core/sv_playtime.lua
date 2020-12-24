@@ -4,12 +4,11 @@ hook.Add("PlayerInitialSpawn", "XPA Playtime", function(pl)
 		return
 	end
 
-	local id, nchanged = pl:SteamID(), false
+	local id = pl:SteamID()
 	pl:SetTimer("XPA Playtime", update, 0, function()
 		if XPA.Playtime[id] then
 			if XPA.Playtime[id].name ~= pl:Name() then
 				XPA.Playtime[id].name = pl:Name()
-				nchanged = true
 			end
 			XPA.Playtime[id].time = XPA.Playtime[id].time + update
 		else
@@ -19,13 +18,9 @@ hook.Add("PlayerInitialSpawn", "XPA Playtime", function(pl)
 			}
 		end
 
-		XPA.DB.Write("xpa-playtime/" .. id, nchanged and {
+		XPA.DB.Write("xpa-playtime/" .. id, {
 			name = XPA.Playtime[id].name,
 			time = XPA.Playtime[id].time
-		} or {
-			time = XPA.Playtime[id].time
 		})
-
-		nchanged = false
 	end)
 end)
