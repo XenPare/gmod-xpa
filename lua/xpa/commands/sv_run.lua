@@ -42,11 +42,7 @@ hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 	if command and IsValid(pl) then
 		if command.immunity and pl:GetImmunity() < command.immunity then
 			pl:ChatPrint("No access")
-			if not pl:IsMuted() then
-				return text
-			else
-				return ""
-			end
+			return not pl:IsMuted() and text or ""
 		end
 
 		local args = line and XPA.ParseArgs(line) or {}
@@ -66,6 +62,6 @@ hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 		end
 
 		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
-		return text
+		return not pl:IsMuted() and text or ""
 	end
 end)
