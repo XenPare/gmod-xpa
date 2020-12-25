@@ -68,6 +68,6 @@ function XPA.BanForm(pl)
 
 	ban.DoClick = function()
 		fr:Remove()
-		RunConsoleCommand("xpa", "ban", pl:SteamID(), time:GetValue(), Reason:GetValue())
+		RunConsoleCommand("xpa", "ban", pl:SteamID(), time:GetValue(), reason:GetValue())
 	end
 end
