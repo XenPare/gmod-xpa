@@ -101,16 +101,18 @@ return "Server Access", "*", {
 				end
 			end
 
+			local str
 			if reason ~= "No reason provided" then
 				_reason = table.Copy(args)
 				_reason[1] = nil
 				_reason = table.ClearKeys(_reason)
+				str = " has kicked " .. target:Name() .. " for: " .. table.concat(_reason, " ")
 				target:Kick(table.concat(_reason, " "))
 			else
+				str = " has kicked " .. target:Name() .. " for: " .. reason
 				target:Kick(reason)
 			end
 
-			local str = " has kicked " .. target:Name() .. " for: " .. reason
 			if IsValid(pl) then
 				XPA.ChatLogCompounded(pl:Name() .. str, pl:GetRankTitle() .. str)
 			else
