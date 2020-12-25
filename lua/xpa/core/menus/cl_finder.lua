@@ -42,7 +42,7 @@ local function addPlayers(tbl, parent)
 	end
 
 	list.OnRowSelected = function(_, _, row)
-		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
+		SetClipboardText(row:GetValue(1))
 	end
 end
 
@@ -111,7 +111,7 @@ local function addRestrictions(tbl, parent)
 	end
 
 	list.OnRowSelected = function(_, _, row)
-		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
+		SetClipboardText(row:GetValue(1))
 	end
 end
 
@@ -161,7 +161,7 @@ local function addBans(tbl, parent)
 	end
 
 	list.OnRowSelected = function(_, _, row)
-		SetClipboardText("http://steamcommunity.com/profiles/" .. util.SteamIDTo64(row:GetValue(1)))
+		SetClipboardText(row:GetValue(1))
 	end
 end
 
