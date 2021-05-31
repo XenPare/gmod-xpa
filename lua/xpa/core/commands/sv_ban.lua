@@ -78,6 +78,7 @@ function XPA.Ban(id, time, reason, banner)
 		local pl = XPA.FindPlayer(id)
 		if not IsValid(pl) then
 			XPA.MsgC(id .. " has been banned: " .. reason .. ".")
+			game.KickID(id, reason)
 			return
 		end
 
