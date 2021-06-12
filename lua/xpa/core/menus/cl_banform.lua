@@ -1,4 +1,8 @@
 function XPA.BanForm(pl)
+	if istable(pl) then
+		pl = pl[1]
+	end
+	
 	local name = pl:Name()
 
 	local fr = vgui.Create("DFrame")
