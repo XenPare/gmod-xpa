@@ -110,6 +110,60 @@ return "Player", "*", {
 	},
 
 	--[[
+		xpa god <steamid/name/userid>
+	]]
+
+	["god"] = {
+		name = "God",
+		immunity = 1000,
+		icon = "icon16/pill.png",
+		visible = true,
+		string = true,
+		func = function(pl, args)
+			local target = XPA.FindPlayer(args[1])
+			if not IsValid(target) or not target:Alive() then
+				return
+			end
+
+			if IsValid(pl) then
+				if target:GetImmunity() > pl:GetImmunity() then
+					return
+				end
+			end
+
+			target:GodEnable()
+			XPA.AChatLog(pl:Name() .. " has enabled god for " .. target:Name())
+		end
+	},
+
+	--[[
+		xpa god <steamid/name/userid>
+	]]
+
+	["ungod"] = {
+		name = "UnGod",
+		immunity = 1000,
+		icon = "icon16/pill_delete.png",
+		visible = true,
+		string = true,
+		func = function(pl, args)
+			local target = XPA.FindPlayer(args[1])
+			if not IsValid(target) or not target:Alive() then
+				return
+			end
+
+			if IsValid(pl) then
+				if target:GetImmunity() > pl:GetImmunity() then
+					return
+				end
+			end
+
+			target:GodDisable()
+			XPA.AChatLog(pl:Name() .. " has disabled god for " .. target:Name())
+		end
+	},
+
+	--[[
 		xpa weapon <steamid/name/userid> <classname>
 	]]
 
