@@ -137,7 +137,7 @@ return "Player", "*", {
 	},
 
 	--[[
-		xpa god <steamid/name/userid>
+		xpa ungod <steamid/name/userid>
 	]]
 
 	["ungod"] = {
