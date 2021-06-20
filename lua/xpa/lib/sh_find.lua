@@ -22,6 +22,10 @@ function XPA.FindPlayer(info)
             return pl
         end
 
+		if tostring(info) == pl:Nick() then
+			return pl
+		end
+
         if string.find(string.lower(pl:Nick()), string.lower(tostring(info)), 1, true) ~= nil then
             return pl
         end
