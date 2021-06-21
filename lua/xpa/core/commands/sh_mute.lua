@@ -5,7 +5,7 @@ end
 
 if SERVER then
 	hook.Add("PlayerSay", "XPA Mute", function(pl)
-		if pl:IsMuted() then 
+		if pl:IsMuted() or XPA.Jail[pl:SteamID()] then 
 			return "" 
 		end
 	end)
