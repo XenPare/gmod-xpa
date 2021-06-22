@@ -71,26 +71,33 @@ xpa unpban <steamid/name/uid>
 
 # Library
 ```lua
+SHARED ENTITY:SetSimpleTimer(INTEGER delay, FUNCTION func)
+SHARED ENTITY:SetTimer(STRING identifier, INTEGER delay, INTEGER repetitions, FUNCTION func)
+SHARED ENTITY:RemoveTimer(STRING identifier)
+SHARED ENTITY:TimerExists(STRING identifier) /// > BOOLEAN
+```
+```lua
 SHARED XPA.IncludeCompounded(STRING path)
 SERVER XPA.AddResourceDir(STRING path)
 ```
 ```lua
-SHARED XPA.FindPlayer(STRING steamid / STRING name / INTEGER uid)
-SHARED XPA.FindBiggest(TABLE numbers)
+SHARED XPA.FindPlayer(STRING steamid / STRING name / INTEGER uid) /// > ENTITY 
+SHARED XPA.FindBiggest(TABLE numbers) /// > INTEGER
+SHARED XPA.FindSmallest(TABLE numbers) /// > INTEGER
 ```
 ```lua
-SHARED XPA.isEmpty(VECTOR pos, VECTOR ignore)
-SHARED XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area)
+SHARED XPA.isEmpty(VECTOR pos, VECTOR ignore) /// > BOOLEAN
+SHARED XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) /// > VECTOR
 ```
 ```lua
-SHARED XPA.nickSortedPlayers()
-SHARED XPA.ParseArgs(STRING str)
-SHARED XPA.ConvertTime(INTEGER time, INTEGER limit)
-SHARED XPA.TimeToSTRING(INTEGER time)
+SHARED XPA.nickSortedPlayers() /// > TABLE
+SHARED XPA.ParseArgs(STRING str) /// > TABLE
+SHARED XPA.ConvertTime(INTEGER time, INTEGER limit) /// > STRING
+SHARED XPA.TimeToStr(INTEGER time) /// > STRING
 ```
 ```lua
-SHARED XPA.IsValidSteamID(STRING id)
-SHARED XPA.IsValidSteamID64(STRING id)
+SHARED XPA.IsValidSteamID(STRING id) /// > BOOLEAN
+SHARED XPA.IsValidSteamID64(STRING id) /// > BOOLEAN
 ```
 ```lua
 SERVER XPA.MsgC(STRING msg)
@@ -102,5 +109,5 @@ SERVER XPA.SendMsg(ENTITY pl, STRING msg)
 ```lua
 SERVER XPA.Ban(STRING id, INTEGER time, STRING reason)
 SERVER XPA.Unban(STRING id)
-SERVER XPA.IsBanned(STRING id)
+SERVER XPA.IsBanned(STRING id) /// > BOOLEAN
 ```
