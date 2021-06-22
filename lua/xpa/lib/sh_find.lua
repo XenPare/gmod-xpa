@@ -48,6 +48,20 @@ function XPA.FindBiggest(tbl)
 end
 
 --[[
+	To find the smallest number
+]]
+
+function XPA.FindSmallest(tbl)
+	local smallest = math.huge
+	for i = 1, #tbl do
+		if tbl[i] < smallest then
+			smallest = tbl[i]
+		end
+	end
+	return smallest
+end
+
+--[[
 	To check if a place is empty
 ]]
 
