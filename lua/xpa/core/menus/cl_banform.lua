@@ -1,6 +1,11 @@
+local def_time = "1440"
+
 function XPA.BanForm(pl)
 	if istable(pl) then
-		pl = pl[1]
+		for _, _pl in pairs(pl) do
+			XPA.BanForm(_pl)
+		end
+		return
 	end
 	
 	local name = pl:Name()
@@ -16,14 +21,14 @@ function XPA.BanForm(pl)
 	time:Dock(TOP)
 	time:DockMargin(0, 1, 0, 1)
 	time:SetTall(28)
-	time:SetText("1440")
+	time:SetText(def_time)
 
 	time.Think = function(self, w, h) 
-		if self:IsEditing() and self:GetValue() == "1440" then
+		if self:IsEditing() and self:GetValue() == def_time then
 			self:SetText("")
 		end
 		if not self:IsEditing() and self:GetValue() == "" then
-			self:SetText("1440")
+			self:SetText(def_time)
 		end
 	end
 
