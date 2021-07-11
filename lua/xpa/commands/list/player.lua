@@ -118,7 +118,6 @@ return "Player", "*", {
 		immunity = 1000,
 		icon = "icon16/pill.png",
 		visible = true,
-		string = true,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
 			if not IsValid(target) or not target:Alive() then
@@ -145,7 +144,6 @@ return "Player", "*", {
 		immunity = 1000,
 		icon = "icon16/pill_delete.png",
 		visible = true,
-		string = true,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
 			if not IsValid(target) or not target:Alive() then
