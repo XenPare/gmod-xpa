@@ -166,7 +166,8 @@ local function addBans(tbl, parent)
 end
 
 net.Receive("XPA Finder", function()
-	local players = net.ReadTable()
+	local len = net.ReadUInt(16)
+	local players = net.ReadData(len)
 	local restricted = net.ReadTable()
 	local banned = net.ReadTable()
 
@@ -190,7 +191,7 @@ net.Receive("XPA Finder", function()
 			self:Remove()
 
 			local playtime = vgui.Create("DPanel", sheet)
-			addPlayers(players, playtime)
+			addPlayers(util.JSONToTable(util.Decompress(players)), playtime)
 			sheet:AddSheet("Players", playtime, "icon16/zoom.png")
 
 			local restrictions = vgui.Create("DPanel", sheet)

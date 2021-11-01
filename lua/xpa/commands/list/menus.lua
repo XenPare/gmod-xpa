@@ -23,8 +23,11 @@ return "Menus", "*", {
 		visible = true,
 		self = true,
 		func = function(pl)
+			local cmp = util.Compress(util.TableToJSON(XPA.Playtime))
+			local len = #cmp
 			net.Start("XPA Finder")
-				net.WriteTable(XPA.Playtime)
+				net.WriteUInt(len, 16)
+				net.WriteData(cmp, len)
 				net.WriteTable(XPA.Restrictions)
 				net.WriteTable(XPA.Bans)
 			net.Send(pl)
