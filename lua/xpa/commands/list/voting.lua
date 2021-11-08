@@ -90,6 +90,11 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
+			if engine.ActiveGamemode() == "groundcontrol" and not table.HasValue(GAMEMODE.curGametype.mapRotation, map) then
+				XPA.SendMsg(pl, "A current gametype doesn't support such map")
+				return
+			end
+
 			if table.HasValue(XPA.Commands.VoteMaps[map].voters, pl) then
 				XPA.SendMsg(pl, "You can't vote twice")
 				return

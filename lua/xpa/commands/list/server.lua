@@ -44,9 +44,7 @@ return "Server", "*", {
 			XPA.MapList = XPA.MapList or {}
 			local maps = file.Find("maps/*", "GAME")
 			for _, map in pairs(maps) do
-				if string.find(map, ".bsp") then
-					table.insert(XPA.MapList, string.StripExtension(map))
-				end
+				table.insert(XPA.MapList, string.Explode(".bsp", map)[1])
 			end
 		end,
 		func = function(pl)
