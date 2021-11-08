@@ -44,7 +44,11 @@ return "Server", "*", {
 			XPA.MapList = XPA.MapList or {}
 			local maps = file.Find("maps/*", "GAME")
 			for _, map in pairs(maps) do
-				table.insert(XPA.MapList, string.Explode(".bsp", map)[1])
+				local mname = string.Explode(".bsp", map)[1]
+				if not map:find(".bsp") or table.HasValue(XPA.MapList, mname) then
+					continue
+				end
+				table.insert(XPA.MapList, mname)
 			end
 		end,
 		func = function(pl)
