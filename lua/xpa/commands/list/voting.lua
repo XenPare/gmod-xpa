@@ -90,9 +90,12 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
-			if engine.ActiveGamemode() == "groundcontrol" and not table.HasValue(GAMEMODE.curGametype.mapRotation, map) then
-				XPA.SendMsg(pl, "A current gametype doesn't support such map")
-				return
+			if engine.ActiveGamemode() == "groundcontrol" then
+				local curgametype = GetConVar("gc_gametype"):GetInt()
+				if not table.HasValue(GAMEMODE.Gametypes[curgametype].mapRotation, map) then
+					XPA.SendMsg(pl, "A current gametype doesn't support such a map")
+					return
+				end
 			end
 
 			if table.HasValue(XPA.Commands.VoteMaps[map].voters, pl) then
@@ -109,6 +112,72 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 
 			if XPA.Commands.VoteMaps[map].voted >= required then
 				RunConsoleCommand("changelevel", map)
+			end
+		end
+	},
+
+	--[[
+		xpa votegame <gametype id>
+	]]
+
+	["votegame"] = {
+		name = "VoteGame",
+		icon = "icon16/controller.png",
+		visible = true,
+		string = true,
+		self = true,
+		gamemode = "groundcontrol",
+		init = function()
+			XPA.Commands.VoteGames = XPA.Commands.VoteGames or {}
+			XPA.Commands.GameTypes = {
+				"Rush",
+				"Assault",
+				"Urban Warfare",
+				"Ghetto Drug Bust"
+			}
+
+			for id in pairs(XPA.Commands.GameTypes) do
+				XPA.Commands.VoteGames[id] = {
+					voted = 0,
+					voters = {}
+				}
+			end
+		end,
+		func = function(pl, args)
+			local game = tonumber(args[1])
+			if not IsValid(pl) or not game then
+				return
+			end
+
+			if not XPA.Commands.GameTypes[game] then
+				XPA.SendMsg(pl, "There is no such gametype on the Ground Control")
+				return
+			end
+
+			if table.HasValue(XPA.Commands.VoteGames[game].voters, pl) then
+				XPA.SendMsg(pl, "You can't vote for this gametype twice")
+				return
+			end
+
+			for gm, data in pairs(XPA.Commands.VoteGames) do
+				if table.HasValue(data.voters, pl) then
+					table.RemoveByValue(XPA.Commands.VoteGames[gm].voters, pl)
+					XPA.Commands.VoteGames[gm].voted = XPA.Commands.VoteGames[gm].voted - 1
+					XPA.SendMsg(pl, "Your previous vote to [" .. gm .. "] " .. XPA.Commands.GameTypes[gm] .. " has been annulled")
+				end
+			end
+
+			XPA.Commands.VoteGames[game].voted = XPA.Commands.VoteGames[game].voted + 1
+			table.insert(XPA.Commands.VoteGames[game].voters, pl)
+
+			local required = math.Round(#player.GetAll() / 2)
+			local str = " has voted for changing gametype to [" .. game .. "] " .. XPA.Commands.GameTypes[game] .. " (" .. XPA.Commands.VoteGames[game].voted .. "/" .. required .. " remains)"
+			XPA.ChatLogCompounded(pl:Name() .. str, pl:Name() .. str)
+
+			if XPA.Commands.VoteGames[game].voted >= required then
+				RunConsoleCommand("gc_gametype", game)
+				local fstr = "Changing a gametype to [" .. game .. "] " .. XPA.Commands.GameTypes[game] .. ". You guys can change the map via !votemap <map_name> command to start playing the featured gametype immediately."
+				XPA.ChatLogCompounded(fstr, fstr)
 			end
 		end
 	}
