@@ -9,28 +9,28 @@ function XPA.FindPlayer(info)
 
 	local pls = player.GetAll()
 	for i = 1, #pls do
-        local pl = pls[i]
-        if tonumber(info) == pl:UserID() then
-            return pl
-        end
+		local pl = pls[i]
+		if tonumber(info) == pl:UserID() then
+			return pl
+		end
 
-        if info == pl:SteamID() then
-            return pl
-        end
+		if info == pl:SteamID() then
+			return pl
+		end
 
-        if info == pl:SteamID64() then
-            return pl
-        end
+		if info == pl:SteamID64() then
+			return pl
+		end
 
 		if tostring(info) == pl:Nick() then
 			return pl
 		end
 
-        if string.find(string.lower(pl:Nick()), string.lower(tostring(info)), 1, true) ~= nil then
-            return pl
-        end
-    end
-    return nil
+		if string.find(string.lower(pl:Nick()), string.lower(tostring(info)), 1, true) ~= nil then
+			return pl
+		end
+	end
+	return nil
 end
 
 --[[
