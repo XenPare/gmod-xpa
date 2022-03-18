@@ -260,21 +260,13 @@ return "Player", "*", {
 				end
 			end
 
-			http.Fetch("http://api.steampowered.com/IPlayerService/IsPlayingSharedGame/v0001/?key=" .. XPA.Config.SteamAPIKey .. "&format=json&steamid=" .. target:SteamID64() .. "&appid_playing=4000",
-				function(body)
-					body = util.JSONToTable(body)
-					if not body or not body.response or not body.response.lender_steamid then
-						pl:ChatPrint("Can't connect to the Steam API")
-					end
-					local lender = body.response.lender_steamid
-					if lender ~= "0" then
-						XPA.SendMsg(pl, target:Name() .. " is using Family Sharing, lender player's SteamID is " .. util.SteamIDFrom64(lender))
-						pl:ChatPrint(target:Name() .. " is using Family Sharing, lender player's SteamID is " .. util.SteamIDFrom64(lender))
-					else
-						XPA.SendMsg(pl, target:Name() .. " is not using Family Sharing")
-					end
-				end
-			)
+			local ownerid =  util.SteamIDFrom64(target:OwnerSteamID64())
+			if target:SteamID() ~= ownerid then
+				XPA.SendMsg(pl, target:Name() .. " is using Family Sharing, lender player's SteamID is " .. ownerid)
+				pl:ChatPrint(target:Name() .. " is using Family Sharing, lender player's SteamID is " .. ownerid)
+			else
+				XPA.SendMsg(pl, target:Name() .. " is not using Family Sharing")
+			end
 		end
 	}
 }, true
