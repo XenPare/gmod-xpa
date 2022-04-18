@@ -1,36 +1,66 @@
 local commands = XPA.Commands or {}
 local selfargs = XPA.Config.SelfArgs
-concommand.Add("xpa", function(pl, cmd, args)
-	local command = commands[args[1]]
-	if not command then
-		return
-	end
-
-	if command.immunity then
-		if IsValid(pl) and pl:GetImmunity() < command.immunity then
-			pl:ChatPrint("No access")
+concommand.Add(
+	"xpa", 
+	function(pl, cmd, args)
+		local command = commands[args[1]]
+		if not command then
 			return
 		end
-	end
 
-	local nargs = table.Copy(args)
-	table.remove(nargs, 1)
-
-	for k, arg in pairs(nargs) do
-		if selfargs[arg] then
-			nargs[k] = pl:Name()
+		if command.immunity then
+			if IsValid(pl) and pl:GetImmunity() < command.immunity then
+				pl:ChatPrint("No access")
+				return
+			end
 		end
+
+		local nargs = table.Copy(args)
+		table.remove(nargs, 1)
+
+		for k, arg in pairs(nargs) do
+			if selfargs[arg] then
+				nargs[k] = pl:Name()
+			end
+		end
+
+		command.func(IsValid(pl) and pl or nil, nargs)
+
+		local argstring = "with no args"
+		if #nargs > 0 then
+			argstring = "with args: " .. table.ToString(nargs)
+		end
+
+		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
+	end,
+	function(cmd, arg)
+		local tbl = {}
+
+		local foundarg = tobool(arg:find("[%a]+"))
+		if not foundarg then
+			for command in pairs(commands) do 
+				table.insert(tbl, "xpa " .. command)
+			end
+		else
+			local t = string.Explode(" ", arg)
+			local w = t[2]
+
+			local command = commands[w]
+			if command then
+				if command.autocompletion then
+					tbl = command.autocompletion(arg)
+				elseif not command.self then 
+					local hstring = command.string
+					for _, pl in pairs(player.GetAll()) do
+						table.insert(tbl, "xpa " .. w .. ' "' .. pl:Name() .. '" ' .. (hstring and '"100"' or ""))
+					end
+				end
+			end
+		end
+
+		return tbl
 	end
-
-	command.func(IsValid(pl) and pl or nil, nargs)
-
-	local argstring = "with no args"
-	if #nargs > 0 then
-		argstring = "with args: " .. table.ToString(nargs)
-	end
-
-	XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
-end)
+)
 
 local prefix = XPA.Config.Prefix
 hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)

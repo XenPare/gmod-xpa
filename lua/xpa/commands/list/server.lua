@@ -26,6 +26,15 @@ return "Server", "*", {
 		self = true,
 		string = true,
 		immunity = 10000,
+		autocompletion = function(arg)
+			local t = string.Explode(" ", arg)
+			local w = t[2]
+			local tbl = {}
+			for _, map in pairs(XPA.MapList) do
+				table.insert(tbl, "xpa " .. w .. ' "' .. map .. '"')
+			end
+			return tbl
+		end,
 		func = function(pl, args)
 			RunConsoleCommand("changelevel", args[1] or "gm_flatgrass")
 		end

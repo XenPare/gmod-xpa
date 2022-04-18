@@ -171,18 +171,29 @@ return "Player", "*", {
 		icon = "icon16/gun.png",
 		visible = true,
 		string = true,
+		init = function()
+			XPA.AvailableWeapons = {}  -- we don't want admins to spawn entities
+			for _, wep in pairs(weapons.GetList()) do
+				XPA.AvailableWeapons[wep.ClassName] = true
+			end
+		end,
+		autocompletion = function(arg)
+			local t = string.Explode(" ", arg)
+			local w = t[2]
+			local tbl = {}
+			for _, pl in pairs(player.GetAll()) do
+				table.insert(tbl, "xpa " .. w .. ' "' .. pl:Name() .. '" "weapon_357"')
+			end
+			return tbl
+		end,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
-			if not IsValid(target) or not target:Alive() or not args[2] then
+			local wepcl = args[2]
+			if not IsValid(target) or not target:Alive() or not wepcl then
 				return
 			end
-
-			local available = {} -- we don't want admins to spawn entities
-			for _, wep in pairs(weapons.GetList()) do
-				table.insert(available, wep.ClassName)
-			end
-			if not table.HasValue(available, args[2]) then
-				target:Give(args[2])
+			if XPA.AvailableWeapons[wepcl] then
+				target:Give(wepcl)
 			end
 		end
 	},

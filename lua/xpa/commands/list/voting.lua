@@ -8,10 +8,10 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 		icon = "icon16/user_delete.png",
 		visible = true,
 		init = function()
-			XPA.Commands.VoteKicks = XPA.Commands.VoteKicks or {}
+			XPA.VoteKicks = XPA.VoteKicks or {}
 			hook.Add("PlayerDisconnected", "XPA VoteKick", function(pl)
-				if XPA.Commands.VoteKicks[pl] then
-					XPA.Commands.VoteKicks[pl] = nil
+				if XPA.VoteKicks[pl] then
+					XPA.VoteKicks[pl] = nil
 				end
 			end)
 		end,
@@ -30,28 +30,28 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
-			if not XPA.Commands.VoteKicks[target] then
-				XPA.Commands.VoteKicks[target] = {
+			if not XPA.VoteKicks[target] then
+				XPA.VoteKicks[target] = {
 					voted = 0,
 					voters = {}
 				}
 			else
-				if table.HasValue(XPA.Commands.VoteKicks[target].voters, pl) then
+				if table.HasValue(XPA.VoteKicks[target].voters, pl) then
 					XPA.SendMsg(pl, "You can't vote twice")
 					return
 				end
 			end
 
-			XPA.Commands.VoteKicks[target].voted = XPA.Commands.VoteKicks[target].voted + 1
-			table.insert(XPA.Commands.VoteKicks[target].voters, pl)
+			XPA.VoteKicks[target].voted = XPA.VoteKicks[target].voted + 1
+			table.insert(XPA.VoteKicks[target].voters, pl)
 
 			local required = math.Round(#player.GetAll() / 2) + 1
-			local str = " has voted for the kick of " .. target:Name() .. " (" .. XPA.Commands.VoteKicks[target].voted .. "/" .. required .. " remains)"
+			local str = " has voted for the kick of " .. target:Name() .. " (" .. XPA.VoteKicks[target].voted .. "/" .. required .. " remains)"
 			XPA.ChatLogCompounded(pl:Name() .. str, pl:Name() .. str)
 
-			if XPA.Commands.VoteKicks[target].voted >= required then
+			if XPA.VoteKicks[target].voted >= required then
 				target:Kick("Kicked by society")
-				XPA.Commands.VoteKicks[target] = nil
+				XPA.VoteKicks[target] = nil
 			end
 		end
 	},
@@ -66,18 +66,27 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 		visible = true,
 		string = true,
 		self = true,
-		gamemode = "groundcontrol/terrortown/fbl",
+		gamemode = "sandbox/groundcontrol/terrortown/fbl",
 		init = function()
-			XPA.Commands.VoteMaps = XPA.Commands.VoteMaps or {}
+			XPA.VoteMaps = {}
 			local maps = XPA.MapList
 			for _, map in pairs(maps) do
 				if not string.find(map, "gm") then
-					XPA.Commands.VoteMaps[map] = {
+					XPA.VoteMaps[map] = {
 						voted = 0,
 						voters = {}
 					}
 				end
 			end
+		end,
+		autocompletion = function(arg)
+			local t = string.Explode(" ", arg)
+			local w = t[2]
+			local tbl = {}
+			for _, map in pairs(XPA.MapList) do
+				table.insert(tbl, "xpa " .. w .. ' "' .. map .. '"')
+			end
+			return tbl
 		end,
 		func = function(pl, args)
 			local map = args[1] 
@@ -85,7 +94,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
-			if not XPA.Commands.VoteMaps[map] then
+			if not XPA.VoteMaps[map] then
 				XPA.SendMsg(pl, "There is no such map installed")
 				return
 			end
@@ -98,19 +107,19 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				end
 			end
 
-			if table.HasValue(XPA.Commands.VoteMaps[map].voters, pl) then
+			if table.HasValue(XPA.VoteMaps[map].voters, pl) then
 				XPA.SendMsg(pl, "You can't vote twice")
 				return
 			end
 
-			XPA.Commands.VoteMaps[map].voted = XPA.Commands.VoteMaps[map].voted + 1
-			table.insert(XPA.Commands.VoteMaps[map].voters, pl)
+			XPA.VoteMaps[map].voted = XPA.VoteMaps[map].voted + 1
+			table.insert(XPA.VoteMaps[map].voters, pl)
 
 			local required = math.Round(#player.GetAll() / 2)
-			local str = " has voted for changing map to " .. map .. " (" .. XPA.Commands.VoteMaps[map].voted .. "/" .. required .. " remains)"
+			local str = " has voted for changing map to " .. map .. " (" .. XPA.VoteMaps[map].voted .. "/" .. required .. " remains)"
 			XPA.ChatLogCompounded(pl:Name() .. str, pl:Name() .. str)
 
-			if XPA.Commands.VoteMaps[map].voted >= required then
+			if XPA.VoteMaps[map].voted >= required then
 				RunConsoleCommand("changelevel", map)
 			end
 		end
@@ -128,16 +137,16 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 		self = true,
 		gamemode = "groundcontrol",
 		init = function()
-			XPA.Commands.VoteGames = XPA.Commands.VoteGames or {}
-			XPA.Commands.GameTypes = {
+			XPA.VoteGames = XPA.VoteGames or {}
+			XPA.GameTypes = {
 				"Rush",
 				"Assault",
 				"Urban Warfare",
 				"Ghetto Drug Bust"
 			}
 
-			for id in pairs(XPA.Commands.GameTypes) do
-				XPA.Commands.VoteGames[id] = {
+			for id in pairs(XPA.GameTypes) do
+				XPA.VoteGames[id] = {
 					voted = 0,
 					voters = {}
 				}
@@ -149,34 +158,34 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				return
 			end
 
-			if not XPA.Commands.GameTypes[game] then
+			if not XPA.GameTypes[game] then
 				XPA.SendMsg(pl, "There is no such gametype on the Ground Control")
 				return
 			end
 
-			if table.HasValue(XPA.Commands.VoteGames[game].voters, pl) then
+			if table.HasValue(XPA.VoteGames[game].voters, pl) then
 				XPA.SendMsg(pl, "You can't vote for this gametype twice")
 				return
 			end
 
-			for gm, data in pairs(XPA.Commands.VoteGames) do
+			for gm, data in pairs(XPA.VoteGames) do
 				if table.HasValue(data.voters, pl) then
-					table.RemoveByValue(XPA.Commands.VoteGames[gm].voters, pl)
-					XPA.Commands.VoteGames[gm].voted = XPA.Commands.VoteGames[gm].voted - 1
-					XPA.SendMsg(pl, "Your previous vote to [" .. gm .. "] " .. XPA.Commands.GameTypes[gm] .. " has been annulled")
+					table.RemoveByValue(XPA.VoteGames[gm].voters, pl)
+					XPA.VoteGames[gm].voted = XPA.VoteGames[gm].voted - 1
+					XPA.SendMsg(pl, "Your previous vote to [" .. gm .. "] " .. XPA.GameTypes[gm] .. " has been annulled")
 				end
 			end
 
-			XPA.Commands.VoteGames[game].voted = XPA.Commands.VoteGames[game].voted + 1
-			table.insert(XPA.Commands.VoteGames[game].voters, pl)
+			XPA.VoteGames[game].voted = XPA.VoteGames[game].voted + 1
+			table.insert(XPA.VoteGames[game].voters, pl)
 
 			local required = math.Round(#player.GetAll() / 2)
-			local str = " has voted for changing gametype to [" .. game .. "] " .. XPA.Commands.GameTypes[game] .. " (" .. XPA.Commands.VoteGames[game].voted .. "/" .. required .. " remains)"
+			local str = " has voted for changing gametype to [" .. game .. "] " .. XPA.GameTypes[game] .. " (" .. XPA.VoteGames[game].voted .. "/" .. required .. " remains)"
 			XPA.ChatLogCompounded(pl:Name() .. str, pl:Name() .. str)
 
-			if XPA.Commands.VoteGames[game].voted >= required then
+			if XPA.VoteGames[game].voted >= required then
 				RunConsoleCommand("gc_gametype", game)
-				local fstr = "Changing a gametype to [" .. game .. "] " .. XPA.Commands.GameTypes[game] .. ". You guys can change the map via !votemap <map_name> command to start playing the featured gametype immediately."
+				local fstr = "Changing a gametype to [" .. game .. "] " .. XPA.GameTypes[game] .. ". You guys can change the map via !votemap <map_name> command to start playing the featured gametype immediately."
 				XPA.ChatLogCompounded(fstr, fstr)
 			end
 		end
