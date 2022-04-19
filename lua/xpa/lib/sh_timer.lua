@@ -1,3 +1,8 @@
+--[[
+	known conflicts:
+		ArcCW
+]]
+
 local ent = FindMetaTable("Entity")
 
 function ent:SetSimpleTimer(delay, func)

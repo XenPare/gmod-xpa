@@ -1,7 +1,7 @@
 local meta, titles = FindMetaTable("Player"), {
 	["founder"] = "Founder",
 	["supervisor"] = "Supervisor",
-	["superadmin"] = "Superadmin",
+	["superadmin"] = "SuperAdmin",
 	["admin"] = "Admin",
 	["user"] = "User"
 }
@@ -42,7 +42,7 @@ function meta:GetImmunity()
 end
 
 --[[
-	Alternatives
+	Aliases
 	## XPA Builds under 08/11/20 are used to have an old GetRankTitle method
 		thats why we add another method to save some time
 ]]

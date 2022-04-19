@@ -83,7 +83,7 @@ local function addRestrictions(tbl, parent)
 		}
 		
 		if isdrp then
-			table.insert(args, tbl.pban and tbl.pban or "false")
+			table.insert(args, tbl.pban and "Yes" or "No")
 		end
 
 		list:AddLine(unpack(args))

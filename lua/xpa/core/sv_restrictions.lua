@@ -1,3 +1,4 @@
+local db = XPA.Config.Database
 hook.Add("PlayerInitialSpawn", "XPA Restrictions", function(pl)
 	local id = pl:SteamID()
 	local tbl = XPA.Restrictions[id]
@@ -10,7 +11,11 @@ hook.Add("PlayerInitialSpawn", "XPA Restrictions", function(pl)
 		end
 		if useless then
 			XPA.Restrictions[id] = nil
-			XPA.DB.Delete("xpa-restrictions/" .. id)
+			if db == "firebase" then
+				XPA.DB.Delete("xpa-restrictions/" .. id)
+			elseif db == "sqlite" or db == "mysqloo" then
+				XPA.DB.RemoveRestrictions(id)
+			end
 			return
 		end
 		pl:SetNWBool("XPA Mute", tbl.mute)

@@ -1,5 +1,7 @@
 XPA.Bans = XPA.Bans or {}
 
+local db = XPA.Config.Database
+
 --[[
 	XPA.Ban (Target ID, Ban Time, Ban reason)
 ]]
@@ -12,6 +14,11 @@ function XPA.Ban(id, time, reason, banner)
 
 	if not reason then
 		reason = "No reason provided"
+	end
+
+	local bannerid = nil
+	if banner and banner ~= nil then
+		local bannerid = IsValid(banner) and banner:SteamID() or banner
 	end
 
 	if not XPA.IsValidSteamID(id) then
@@ -30,54 +37,65 @@ function XPA.Ban(id, time, reason, banner)
 		end
 
 		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
+
 		-- Local DB Integration
 		XPA.Bans[idv] = {
 			time = time,
 			reason = reason
 		}
 
-		-- DB Integration
-		XPA.DB.Write("xpa-bans/" .. idv, {
-			time = time,
-			reason = reason
-		})
-
-		-- Patch the banner
-		if banner and banner ~= nil then
-			local bannerid = IsValid(banner) and banner:SteamID() or banner
+		if bannerid then
 			XPA.Bans[idv].banner = bannerid
-			XPA.DB.Write("xpa-bans/" .. idv, {
-				banner = bannerid
-			})
 		end
 
-		pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
-		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
+		-- DB Integration
+		if db == "firebase" then
+			XPA.DB.Write("xpa-bans/" .. idv, {
+				time = time,
+				reason = reason
+			})
+
+			-- Patch the banner
+			if bannerid then 
+				XPA.DB.Write("xpa-bans/" .. idv, {
+					banner = bannerid
+				})
+			end
+		elseif db == "sqlite" or db == "mysqloo" then
+			XPA.DB.AddBan(idv, reason, time, bannerid)
+		end
+
+		pl:Kick("You have just been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
+		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has just been banned: " .. reason .. ".")
 	else
 		-- Local DB Integration
 		XPA.Bans[id] = {
 			time = time,
 			reason = reason
 		}
+
+		if bannerid then
+			XPA.Bans[idv].banner = bannerid
+		end
 		
 		-- DB Integration
-		XPA.DB.Write("xpa-bans/" .. id, {
-			time = time,
-			reason = reason
-		})
+		if db == "firebase" then
+			XPA.DB.Write("xpa-bans/" .. id, {
+				time = time,
+				reason = reason
+			})
 
-		-- Patch the banner
-		if banner and banner ~= nil then
-			local bannerid = IsValid(banner) and banner:SteamID() or banner
-			XPA.Bans[id].banner = bannerid
+			-- Patch the banner
 			XPA.DB.Write("xpa-bans/" .. id, {
 				banner = bannerid
 			})
+		elseif db == "sqlite" or db == "mysqloo" then
+			XPA.DB.AddBan(id, reason, time, bannerid)
 		end
 
 		local pl = XPA.FindPlayer(id)
 		if not IsValid(pl) then
-			XPA.MsgC(id .. " has been banned: " .. reason .. ".")
+			XPA.MsgC(id .. " has just been banned: " .. reason .. ".")
 			game.KickID(id, reason)
 			return
 		end
@@ -88,26 +106,32 @@ function XPA.Ban(id, time, reason, banner)
 		end
 
 		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
-		pl:Kick("You have been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
-		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has been banned: " .. reason .. ".")
+		pl:Kick("You have just been banned.\nShame.\n\nReason: " .. reason .. "\nRemaining: " .. preview)
+		XPA.MsgC(pl:Name() .. " [" .. idv .. " / " .. ip .. "] has just been banned: " .. reason .. ".")
 	end
 end
 
 --[[
-	XPA.Unban (Target ID)
+	XPA.Unban (SteamID)
 ]]
 
 function XPA.Unban(id)
 	if XPA.Bans[id] then
 		XPA.Bans[id] = nil
 	end
-	XPA.DB.Read("xpa-bans", function(js)
-		local bans = util.JSONToTable(js) 
-		if bans[id] then
-			XPA.DB.Delete("xpa-bans/" .. id)
-			XPA.MsgC(id .. " has been unbanned.")
-		end
-	end)
+
+	if db == "firebase" then
+		XPA.DB.Read("xpa-bans", function(js)
+			local bans = util.JSONToTable(js) 
+			if bans[id] then
+				XPA.DB.Delete("xpa-bans/" .. id)
+				XPA.MsgC(id .. " has just been unbanned.")
+			end
+		end)
+	elseif db == "sqlite" or db == "mysqloo" then
+		XPA.DB.RemoveBan(id)
+		XPA.MsgC(id .. " has just been unbanned.")
+	end
 end
 
 --[[
@@ -127,9 +151,23 @@ end
 
 timer.Create("XPA Bans Update", XPA.Config.BansUpdate, 0, function()
 	local found = table.Copy(XPA.Bans)
-	XPA.DB.Read("xpa-bans", function(js)
-		local loaded = util.JSONToTable(js) 
-		for id, data in pairs(loaded) do
+	if db == "firebase" then
+		XPA.DB.Read("xpa-bans", function(js)
+			local loaded = util.JSONToTable(js) 
+			for id, data in pairs(loaded) do
+				if not found[id] then
+					found[id] = data
+				end
+				local pl = XPA.FindPlayer(id)
+				if IsValid(pl) then
+					pl:Kick(found[id].reason)
+				end
+			end
+			XPA.Bans = found
+		end)
+	elseif db == "sqlite" or db == "mysqloo" then 
+		local bans = sql.Query("SELECT * FROM xpa_bans")
+		for id, data in pairs(bans) do
 			if not found[id] then
 				found[id] = data
 			end
@@ -139,7 +177,7 @@ timer.Create("XPA Bans Update", XPA.Config.BansUpdate, 0, function()
 			end
 		end
 		XPA.Bans = found
-	end)
+	end
 end)
 
 --[[
@@ -157,10 +195,10 @@ hook.Add("CheckPassword", "XPA Bans", function(id64)
 			else
 				local preview = ((time - os.time()) * 60) / 60
 				preview = XPA.ConvertTime(preview)
-				return false, "You have been banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: " .. preview
+				return false, "You are banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: " .. preview
 			end
 		else
-			return false, "You have been banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: ∞"
+			return false, "You are banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: ∞"
 		end
 	else
 		return true

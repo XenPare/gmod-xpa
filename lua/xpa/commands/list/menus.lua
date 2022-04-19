@@ -55,6 +55,9 @@ return "Menus", "*", {
 					init[cmd] = nil
 					continue
 				end
+				if data.autocompletion then
+					data.autocompletion = nil
+				end
 				if data.check then
 					data.check = nil
 				end

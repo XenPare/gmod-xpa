@@ -1,3 +1,5 @@
+![preview](https://i.imgur.com/frnUkkF.png)
+![preview](https://i.imgur.com/lmZKqA0.png)
 # Commands
 ### Menus
 ```
@@ -47,6 +49,7 @@ xpa unfreeze <steamid/name/uid>
 ```
 ### Server
 ```
+xpa setrank <steamid/name/uid> <rank>
 xpa rcon <...>
 xpa map <mapname>
 xpa maplist
@@ -86,11 +89,12 @@ SHARED XPA.FindBiggest(TABLE numbers) /// > INTEGER
 SHARED XPA.FindSmallest(TABLE numbers) /// > INTEGER
 ```
 ```lua
-SHARED XPA.isEmpty(VECTOR pos, VECTOR ignore) /// > BOOLEAN
-SHARED XPA.findEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) /// > VECTOR
+SHARED XPA.IsEmpty(VECTOR pos, VECTOR ignore) /// > BOOLEAN
+SHARED XPA.FindEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) /// > VECTOR
 ```
 ```lua
-SHARED XPA.nickSortedPlayers() /// > TABLE
+SHARED XPA.NameSortedPlayers() /// > TABLE
+SHARED XPA.TeamSortedPlayers() /// > TABLE
 SHARED XPA.ParseArgs(STRING str) /// > TABLE
 SHARED XPA.ConvertTime(INTEGER time, INTEGER limit) /// > STRING
 SHARED XPA.TimeToStr(INTEGER time) /// > STRING

@@ -1,3 +1,4 @@
+local db = XPA.Config.Database
 local meta = FindMetaTable("Player")
 
 meta._SetUserGroup = meta.SetUserGroup
@@ -7,7 +8,7 @@ function meta:SetUserGroup(usergroup)
 	local ranks = XPA.Ranks
 	local rank = ranks[usergroup]
 	if rank then
-		self:SetImmunity(rank.immunity)
+		self:SetImmunity(db == "firebase" and rank.immunity or rank)
 	else
 		self:SetImmunity(0)
 	end

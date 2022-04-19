@@ -22,11 +22,11 @@ function XPA.FindPlayer(info)
 			return pl
 		end
 
-		if tostring(info) == pl:Nick() then
+		if tostring(info) == pl:Name() then
 			return pl
 		end
 
-		if string.find(string.lower(pl:Nick()), string.lower(tostring(info)), 1, true) ~= nil then
+		if string.find(string.lower(pl:Name()), string.lower(tostring(info)), 1, true) ~= nil then
 			return pl
 		end
 	end
@@ -73,7 +73,7 @@ local content_blacklist = {
 	CONTENTS_MONSTERCLIP
 }
 
-function XPA.isEmpty(vector, ignore)
+function XPA.IsEmpty(vector, ignore)
 	ignore = ignore or {}
 
 	local point, a = util.PointContents(vector), not table.HasValue(content_blacklist, point) 
@@ -96,23 +96,23 @@ end
 	To find an empty pos by given vector
 ]]
 
-function XPA.findEmptyPos(pos, ignore, distance, step, area)
-	if XPA.isEmpty(pos, ignore) and XPA.isEmpty(pos + area, ignore) then
+function XPA.FindEmptyPos(pos, ignore, distance, step, area)
+	if XPA.IsEmpty(pos, ignore) and XPA.IsEmpty(pos + area, ignore) then
 		return pos
 	end
 	for j = step, distance, step do
 		for i = -1, 1, 2 do
 			local k = j * i
 
-			if XPA.isEmpty(pos + Vector(k, 0, 0), ignore) and XPA.isEmpty(pos + Vector(k, 0, 0) + area, ignore) then
+			if XPA.IsEmpty(pos + Vector(k, 0, 0), ignore) and XPA.IsEmpty(pos + Vector(k, 0, 0) + area, ignore) then
 				return pos + Vector(k, 0, 0)
 			end
 			
-			if XPA.isEmpty(pos + Vector(0, k, 0), ignore) and XPA.isEmpty(pos + Vector(0, k, 0) + area, ignore) then
+			if XPA.IsEmpty(pos + Vector(0, k, 0), ignore) and XPA.IsEmpty(pos + Vector(0, k, 0) + area, ignore) then
 				return pos + Vector(0, k, 0)
 			end
 
-			if XPA.isEmpty(pos + Vector(0, 0, k), ignore) and XPA.isEmpty(pos + Vector(0, 0, k) + area, ignore) then
+			if XPA.IsEmpty(pos + Vector(0, 0, k), ignore) and XPA.IsEmpty(pos + Vector(0, 0, k) + area, ignore) then
 				return pos + Vector(0, 0, k)
 			end
 		end
@@ -121,13 +121,25 @@ function XPA.findEmptyPos(pos, ignore, distance, step, area)
 end
 
 --[[
-	Sort table by nicks
+	Sort table by names
 ]]
 
-function XPA.nickSortedPlayers()
+function XPA.NameSortedPlayers()
 	local plys = player.GetAll()
 	table.sort(plys, function(a, b) 
-		return a:Nick() < b:Nick() 
+		return a:Name() < b:Name() 
+	end)
+	return plys
+end
+
+--[[
+	Sort table by team
+]]
+
+function XPA.TeamSortedPlayers()
+	local plys = player.GetAll()
+	table.sort(plys, function(a, b) 
+		return a:Team() < b:Team() 
 	end)
 	return plys
 end

@@ -37,7 +37,7 @@ return "Moving", "*", {
 			end
 
 			target.ReturnPos = target:GetPos()
-			local init = XPA.findEmptyPos(trace.HitPos + offset, {pl}, 600, 20, Vector(16, 16, 64))
+			local init = XPA.FindEmptyPos(trace.HitPos + offset, {pl}, 600, 20, Vector(16, 16, 64))
 			target:SetPos(init)
 
 			XPA.AChatLog(pl:Name() .. " has teleported " .. target:Name())
@@ -70,7 +70,7 @@ return "Moving", "*", {
 			end
 
 			pl.ReturnPos = pl:GetPos()
-			pl:SetPos(XPA.findEmptyPos(target:GetPos(), {pl}, 600, 30, Vector(16, 16, 64)))
+			pl:SetPos(XPA.FindEmptyPos(target:GetPos(), {pl}, 600, 30, Vector(16, 16, 64)))
 
 			XPA.AChatLog(pl:Name() .. " has teleported to " .. target:Name())
 		end

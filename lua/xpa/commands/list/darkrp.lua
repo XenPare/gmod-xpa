@@ -1,3 +1,4 @@
+local db = XPA.Config.Database
 return "DarkRP", "darkrp", {
 	--[[
 		xpa hg <steamid/name/userid> <number>
@@ -142,61 +143,50 @@ return "DarkRP", "darkrp", {
 			end)
 		end,
 		func = function(pl, args)
+			local id = ""
 			local target = XPA.FindPlayer(args[1])
-			if not IsValid(target) then
-				if XPA.IsValidSteamID(args[1]) then
-					target = args[1]
-				else
-					return
-				end
+			if XPA.IsValidSteamID(args[1]) then
+				id = args[1]
+			elseif IsValid(target) then
+				id = target:SteamID()
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and IsValid(target) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
 			end
 
-			if not XPA.IsValidSteamID(target) and IsValid(target) then
-				-- Server Network
+			if IsValid(target) then
 				target:SetNWBool("XPA Police Ban", true)
+			end
 
-				-- Local DB Integration
-				local id = target:SteamID()
-				if XPA.Restrictions[id] then
-					XPA.Restrictions[id].pban = true
-				else
-					XPA.Restrictions[id] = {
-						pban = true
-					}
-				end
+			-- Local DB Integration
+			if XPA.Restrictions[id] then
+				XPA.Restrictions[id].pban = true
+			else
+				XPA.Restrictions[id] = {
+					pban = true
+				}
+			end
 
-				-- DB Integration
+			-- DB Integration
+			if db == "firebase" then
 				XPA.DB.Write("xpa-restrictions/" .. id, {
 					pban = true
 				})
+			elseif db == "sqlite" or db == "mysqloo" then
+				XPA.DB.SetRestriction(id, nil, nil, true)
+			end
 
-				-- Demote
+			-- Demote
+			if IsValid(target) then
 				if GAMEMODE.CivilProtection[target:Team()] then
 					target:changeTeam(GAMEMODE.DefaultTeam, true)
 				end
-			else
-				-- Local DB Integration
-				if XPA.Restrictions[target] then
-					XPA.Restrictions[target].pban = true
-				else
-					XPA.Restrictions[target] = {
-						pban = true,
-					}
-				end
-
-				-- DB Integration
-				XPA.DB.Write("xpa-restrictions/" .. target, {
-					pban = true
-				})
 			end
 
-			local str = " has police banned " .. (XPA.IsValidSteamID(target) and target or target:Name())
+			local str = " has police banned " .. (IsValid(target) and target:Name() or id)
 			if IsValid(pl) then
 				XPA.ChatLogCompounded(pl:Name() .. str, pl:GetRankTitle() .. str)
 			else
@@ -215,48 +205,37 @@ return "DarkRP", "darkrp", {
 		icon = "icon16/controller_add.png",
 		visible = true,
 		func = function(pl, args)
+			local id = ""
 			local target = XPA.FindPlayer(args[1])
-			if not IsValid(target) then
-				if XPA.IsValidSteamID(args[1]) then
-					target = args[1]
-				else
-					return
-				end
+			if XPA.IsValidSteamID(args[1]) then
+				id = args[1]
+			elseif IsValid(target) then
+				id = target:SteamID()
 			end
 
-			if IsValid(pl) then
+			if IsValid(pl) and IsValid(target) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
 				end
 			end
 
-			if not XPA.IsValidSteamID(target) and IsValid(target) then
-				-- Server Network
+			if IsValid(target) then
 				target:SetNWBool("XPA Police Ban", false)
+			end
 
-				-- Local DB Integration
-				local id = target:SteamID()
-				if XPA.Restrictions[id] then
-					XPA.Restrictions[id].pban = false
-				end
+			if XPA.Restrictions[id] then
+				XPA.Restrictions[id].pban = false
+			end
 
-				-- DB Integration
-				XPA.DB.Write("xpa-restrictions/" .. id, {
-					pban = false
-				})
-			else
-				-- Local DB Integration
-				if XPA.Restrictions[target] then
-					XPA.Restrictions[target].pban = false
-				end
-
-				-- DB Integration
+			if db == "firebase" then
 				XPA.DB.Write("xpa-restrictions/" .. target, {
 					pban = false
 				})
+			elseif db == "sqlite" or db == "mysqloo" then
+				XPA.DB.SetRestriction(id, nil, nil, false)
 			end
 
-			local str = " has police unbanned " .. (XPA.IsValidSteamID(target) and target or target:Name())
+			local str = " has police unbanned " .. (IsValid(target) and target:Name() or id)
 			if IsValid(pl) then
 				XPA.ChatLogCompounded(pl:Name() .. str, pl:GetRankTitle() .. str)
 			else
