@@ -11,51 +11,51 @@ xpa info<br>
 xpa menu<br>
 xpa finder<br>
 <br>
-xpa ban <steamid/name/uid><br>
-xpa unban <steamid/name/uid><br>
-xpa kick <steamid/name/uid><br>
+xpa ban [steamid/name/uid]<br>
+xpa unban [steamid/name/uid]<br>
+xpa kick [steamid/name/uid]<br>
 <br>
-xpa gag <steamid/name/uid><br>
-xpa ungag <steamid/name/uid><br>
-xpa mute <steamid/name/uid><br>
-xpa unmute <steamid/name/uid><br>
+xpa gag [steamid/name/uid]<br>
+xpa ungag [steamid/name/uid]<br>
+xpa mute [steamid/name/uid]<br>
+xpa unmute [steamid/name/uid]<br>
 <br>
-xpa teleport <steamid/name/uid><br>
-xpa goto <steamid/name/uid><br>
-xpa return <steamid/name/uid><br>
+xpa teleport [steamid/name/uid]<br>
+xpa goto [steamid/name/uid]<br>
+xpa return [steamid/name/uid]<br>
 <br>
-xpa hp <steamid/name/uid> <number><br>
-xpa gethp <steamid/name/uid><br>
-xpa ar <steamid/name/uid> <number><br>
-xpa getar <steamid/name/uid><br>
-xpa weapon <steamid/name/uid> <classname><br>
-xpa fs <steamid/name/uid><br>
+xpa hp [steamid/name/uid> [number]<br>
+xpa gethp [steamid/name/uid]<br>
+xpa ar [steamid/name/uid] [number]<br>
+xpa getar [steamid/name/uid]<br>
+xpa weapon [steamid/name/uid] <classname><br>
+xpa fs [steamid/name/uid]<br>
 xpa noclip<br>
 xpa cloak<br>
 <br>
-xpa jail <steamid/name/uid> <time><br>
-xpa unjail <steamid/name/uid><br>
-xpa ignite <steamid/name/uid> <time><br>
-xpa unignite <steamid/name/uid><br>
-xpa slay <steamid/name/uid><br>
-xpa freeze <steamid/name/uid><br>
-xpa unfreeze <steamid/name/uid><br>
+xpa jail [steamid/name/uid] [time]<br>
+xpa unjail [steamid/name/uid]<br>
+xpa ignite [steamid/name/uid] [time]<br>
+xpa unignite [steamid/name/uid]<br>
+xpa slay [steamid/name/uid]<br>
+xpa freeze [steamid/name/uid]<br>
+xpa unfreeze [steamid/name/uid]<br>
 <br>
-xpa setrank <steamid/name/uid> <rank><br>
-xpa rcon <...><br>
-xpa map <mapname><br>
+xpa setrank [steamid/name/uid] [rank]<br>
+xpa rcon [...]<br>
+xpa map [mapname]<br>
 xpa maplist<br>
 xpa teamlist<br>
 <br>
-xpa votekick <steamid/name/uid><br>
-xpa votemap <STRING mapname><br>
+xpa votekick [steamid/name/uid]<br>
+xpa votemap [mapname]<br>
 <br>
-xpa hg <steamid/name/uid> <number><br>
-xpa setjob <steamid/name/uid> <team><br>
-xpa arrest <steamid/name/uid> <time><br>
-xpa unarrest <steamid/name/uid><br>
-xpa pban <steamid/name/uid><br>
-xpa unpban <steamid/name/uid><br>
+xpa hg [steamid/name/uid] [number]<br>
+xpa setjob [steamid/name/uid] [team]<br>
+xpa arrest [steamid/name/uid] [time]<br>
+xpa unarrest [steamid/name/uid]<br>
+xpa pban [steamid/name/uid]<br>
+xpa unpban [steamid/name/uid]<br>
 </details>
 
 # Library
