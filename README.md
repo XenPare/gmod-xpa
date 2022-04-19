@@ -1,5 +1,9 @@
 ![preview](https://i.imgur.com/frnUkkF.png)
 ![preview](https://i.imgur.com/lmZKqA0.png)
+# Supported databases
+* [MySQLOO](https://github.com/FredyH/MySQLOO/releases/)
+* Firebase
+* SQLite
 # Commands
 ### Menus
 ```
