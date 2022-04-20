@@ -7,32 +7,41 @@
 # Commands
 <details>
 <summary>Click me!</summary>
+* Menus:
+<br>
 xpa info<br>
 xpa menu<br>
 xpa finder<br>
 <br>
-xpa ban [steamid/name/uid]<br>
-xpa unban [steamid/name/uid]<br>
-xpa kick [steamid/name/uid]<br>
+* Communication:
 <br>
 xpa gag [steamid/name/uid]<br>
 xpa ungag [steamid/name/uid]<br>
 xpa mute [steamid/name/uid]<br>
 xpa unmute [steamid/name/uid]<br>
 <br>
+* Moving:
+<br>
 xpa teleport [steamid/name/uid]<br>
 xpa goto [steamid/name/uid]<br>
 xpa return [steamid/name/uid]<br>
+<br>
+* Player:
 <br>
 xpa hp [steamid/name/uid> [number]<br>
 xpa gethp [steamid/name/uid]<br>
 xpa ar [steamid/name/uid] [number]<br>
 xpa getar [steamid/name/uid]<br>
 xpa weapon [steamid/name/uid] <classname><br>
-xpa fs [steamid/name/uid]<br>
+xpa fs [steamid/name/uid] (family sharing check)<br>
 xpa noclip<br>
 xpa cloak<br>
 <br>
+* Punishment:
+<br>
+xpa ban [steamid/name/uid]<br>
+xpa unban [steamid/name/uid]<br>
+xpa kick [steamid/name/uid]<br>
 xpa jail [steamid/name/uid] [time]<br>
 xpa unjail [steamid/name/uid]<br>
 xpa ignite [steamid/name/uid] [time]<br>
@@ -41,57 +50,63 @@ xpa slay [steamid/name/uid]<br>
 xpa freeze [steamid/name/uid]<br>
 xpa unfreeze [steamid/name/uid]<br>
 <br>
+* Server:
+<br>
 xpa setrank [steamid/name/uid] [rank]<br>
 xpa rcon [...]<br>
 xpa map [mapname]<br>
-xpa maplist<br>
-xpa teamlist<br>
+xpa maplist (print a server map list)<br>
+xpa teamlist (print a server team list)<br>
+<br>
+* Voting:
 <br>
 xpa votekick [steamid/name/uid]<br>
 xpa votemap [mapname]<br>
+<br>
+* DarkRP:
 <br>
 xpa hg [steamid/name/uid] [number]<br>
 xpa setjob [steamid/name/uid] [team]<br>
 xpa arrest [steamid/name/uid] [time]<br>
 xpa unarrest [steamid/name/uid]<br>
-xpa pban [steamid/name/uid]<br>
-xpa unpban [steamid/name/uid]<br>
+xpa pban [steamid/name/uid] (police team ban)<br>
+xpa unpban [steamid/name/uid] (police team unban)<br>
 </details>
 
 # Library
 <details>
 <summary>Click me!</summary>
-SHARED ENTITY:SetSimpleTimer(INTEGER delay, FUNCTION func)<br>
-SHARED ENTITY:SetTimer(STRING identifier, INTEGER delay, INTEGER repetitions, FUNCTION func)<br>
-SHARED ENTITY:RemoveTimer(STRING identifier)<br>
-SHARED ENTITY:TimerExists(STRING identifier) /// > BOOLEAN<br>
+[sh] [no return] Entity:SetSimpleTimer(number delay, function func)<br>
+[sh] [no return] Entity:SetTimer(string identifier, number delay, number repetitions, function func)<br>
+[sh] [no return] Entity:RemoveTimer(string identifier)<br>
+[sh] [boolean] Entity:TimerExists(string identifier)<br>
 <br>
-SHARED XPA.IncludeCompounded(STRING path)<br>
-SERVER XPA.AddResourceDir(STRING path)<br>
+[sh] [no return] XPA.IncludeCompounded(string path)<br>
+[sh] [no return] XPA.AddResourceDir(string path)<br>
 <br>
-SHARED XPA.FindPlayer(STRING steamid / STRING name / INTEGER uid) /// > ENTITY<br>
-SHARED XPA.FindBiggest(TABLE numbers) /// > INTEGER<br>
-SHARED XPA.FindSmallest(TABLE numbers) /// > INTEGER<br>
+[sh] [entity] XPA.FindPlayer(string id)<br>
+[sh] [number] XPA.FindBiggest(table numbers)<br>
+[sh] [number] XPA.FindSmallest(table numbers)<br>
 <br>
-SHARED XPA.IsEmpty(VECTOR pos, VECTOR ignore) /// > BOOLEAN<br>
-SHARED XPA.FindEmptyPos(VECTOR pos, TABLE ignore, INTEGER distance, INTEGER step, VECTOR area) /// > VECTOR<br>
+[sh] [boolean] XPA.IsEmpty(vector pos, vector ignore)<br>
+[sh] [vector] XPA.FindEmptyPos(vector pos, table ignore, number distance, number step, vector area)<br>
 <br>
-SHARED XPA.NameSortedPlayers() /// > TABLE<br>
-SHARED XPA.TeamSortedPlayers() /// > TABLE<br>
-SHARED XPA.ParseArgs(STRING str) /// > TABLE<br>
-SHARED XPA.ConvertTime(INTEGER time, INTEGER limit) /// > STRING<br>
-SHARED XPA.TimeToStr(INTEGER time) /// > STRING<br>
+[sh] [table] XPA.NameSortedPlayers()<br>
+[sh] [table] XPA.TeamSortedPlayers()<br>
+[sh] [table] XPA.ParseArgs(string str)<br>
+[sh] [string] XPA.ConvertTime(number time, number limit)<br>
+[sh] [string] XPA.TimeToStr(number time)<br>
 <br>
-SHARED XPA.IsValidSteamID(STRING id) /// > BOOLEAN<br>
-SHARED XPA.IsValidSteamID64(STRING id) /// > BOOLEAN<br>
+[sh] [boolean] XPA.IsValidSteamID(string id)<br>
+[sh] [boolean] XPA.IsValidSteamID64(string id)<br>
 <br>
-SERVER XPA.MsgC(STRING msg)<br>
-SERVER XPA.ChatLog(STRING msg)<br>
-SERVER XPA.AChatLog(STRING msg)<br>
-SERVER XPA.ChatLogCompounded(STRING adminmsg, STRING usermsg)<br>
-SERVER XPA.SendMsg(ENTITY pl, STRING msg)<br>
+[sv] [no return] XPA.MsgC(string msg)<br>
+[sv] [no return] XPA.ChatLog(string msg)<br>
+[sv] [no return] XPA.AChatLog(string msg)<br>
+[sv] [no return] XPA.ChatLogCompounded(string adminmsg, string usermsg)<br>
+[sv] [no return] XPA.SendMsg(entity pl, string msg)<br>
 <br>
-SERVER XPA.Ban(STRING id, INTEGER time, STRING reason)<br>
-SERVER XPA.Unban(STRING id)<br>
-SERVER XPA.IsBanned(STRING id) /// > BOOLEAN<br>
+[sv] [no return] XPA.Ban(string id, number time, string reason)<br>
+[sv] [no return] XPA.Unban(string id)<br>
+[sv] [boolean] XPA.IsBanned(string id)<br>
 </details>
