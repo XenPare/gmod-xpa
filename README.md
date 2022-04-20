@@ -1,7 +1,13 @@
+# Menu
 ![preview](https://i.imgur.com/frnUkkF.png)
 ![preview](https://i.imgur.com/lmZKqA0.png)
+<br>
+# Finder
+[Players Finder](https://i.imgur.com/LrneKV3.png)<br>
+[Restrictions Finder](https://i.imgur.com/PyfSwgz.png)<br>
+[Bans Finder](https://i.imgur.com/eH4anN7.png)<br>
 # Supported databases
-* [MySQLOO](https://github.com/FredyH/MySQLOO/releases/)
+* MySQL (by [MySQLOO](https://github.com/FredyH/MySQLOO/releases/) module)
 * Firebase
 * SQLite
 # Commands
