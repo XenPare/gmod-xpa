@@ -71,7 +71,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 			XPA.VoteMaps = {}
 			local maps = XPA.MapList
 			for _, map in pairs(maps) do
-				if not string.find(map, "gm") then
+				if engine.ActiveGamemode() == "sandbox" and true or not string.find(map, "gm") then
 					XPA.VoteMaps[map] = {
 						voted = 0,
 						voters = {}
