@@ -32,7 +32,8 @@ XPA.Config.SelfArgs = {
 }
 
 -- rank - immunity
--- you can add a fancy title at xpa/core/usergroups/sh_init.lua
+-- you can add a fancy title at xpa/core/sh_customtitles.lua
+-- it's really recommended not to change default immunity values
 XPA.Config.Ranks = {
 	["founder"] = 100000,
 	["supervisor"] = 10000,
