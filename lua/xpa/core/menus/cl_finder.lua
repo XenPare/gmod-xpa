@@ -47,10 +47,7 @@ local function addPlayers(tbl, parent)
 end
 
 local function addRestrictions(tbl, parent)
-	local isdrp = false
-	if engine.ActiveGamemode() == "darkrp" then
-		isdrp = true
-	end
+	local isdrp = engine.ActiveGamemode() == "darkrp"
 
 	local list = vgui.Create("DListView", parent)
 	list:Dock(FILL)
