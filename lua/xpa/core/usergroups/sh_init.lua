@@ -7,6 +7,23 @@ local meta, titles = FindMetaTable("Player"), {
 }
 
 --[[
+	Custom titles
+]]
+
+if XPA.CustomTitles then 
+	-- create a simple file (e.g lua/autorun/xpa_customtitles.lua) and append with code like:
+
+	-- XPA = XPA or {}
+	-- XPA.CustomTitles = {
+	-- 		["moderator"] = "Moderator",
+	-- 		["supermoderator"] = "SuperModerator"
+	-- }
+
+	table.Merge(titles, XPA.CustomTitles)
+	XPA.CustomTitles = nil
+end
+
+--[[
 	Booleans
 ]]
 
