@@ -42,5 +42,10 @@ hook.Add("CAMI.PlayerUsergroupChanged", "XPA CAMI", function(pl, old, new, sourc
 end)
 
 hook.Add("CAMI.PlayerHasAccess", "XPA CAMI", function(pl, privilege, callback, target)
-	return pl:GetImmunity() > target:GetImmunity()
+	if not IsValid(pl) or not IsValid(target) then
+		return
+	end
+	if pl:GetImmunity() > target:GetImmunity() then
+		return true
+	end
 end)
