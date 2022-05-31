@@ -1,6 +1,6 @@
 --[[
 	known conflicts:
-		ArcCW
+		ArcCW, TFA
 ]]
 
 local ent = FindMetaTable("Entity")
