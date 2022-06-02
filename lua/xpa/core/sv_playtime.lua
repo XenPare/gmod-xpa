@@ -19,6 +19,7 @@ hook.Add("PlayerInitialSpawn", "XPA Playtime", function(pl)
 				name = plname,
 				time = update
 			}
+			should_update_name = true
 		end
 
 		if db == "firebase" then

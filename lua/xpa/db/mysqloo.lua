@@ -61,12 +61,20 @@ hook.Add("Initialize", "XPA DB", function()
 end)
 
 XPA.DB.UpdatePlaytime = function(id, name, time)
-	if name ~= nil then
-		db:query("UPDATE xpa_playtime SET name = " .. SQLStr(name) .. " WHERE id = " .. SQLStr(id)):start()
+	local q = db:query("SELECT * FROM xpa_playtime WHERE id = " .. SQLStr(id))
+	q.onSuccess = function(_, data)
+		if #data == 0 then
+			db:query("INSERT INTO xpa_playtime (id, name, time) VALUES(" .. SQLStr(id) .. ", " .. SQLStr(name) .. ", "  .. SQLStr(time) .. ")"):start()
+		else
+			if name ~= nil then
+				db:query("UPDATE xpa_playtime SET name = " .. SQLStr(name) .. " WHERE id = " .. SQLStr(id)):start()
+			end
+			if time ~= nil then
+				db:query("UPDATE xpa_playtime SET time = " .. SQLStr(time) .. " WHERE id = " .. SQLStr(id)):start()
+			end
+		end
 	end
-	if time ~= nil then
-		db:query("UPDATE xpa_playtime SET time = " .. SQLStr(time) .. " WHERE id = " .. SQLStr(id)):start()
-	end
+	q:start()
 end
 
 XPA.DB.AddBan = function(id, reason, time, banner)
