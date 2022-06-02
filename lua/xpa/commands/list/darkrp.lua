@@ -101,7 +101,6 @@ return "DarkRP", "darkrp", {
 		immunity = 1000,
 		icon = "icon16/basket_delete.png",
 		visible = true,
-		string = true,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
 			if not IsValid(target) or not target:Alive() then
