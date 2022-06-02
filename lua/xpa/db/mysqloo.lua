@@ -93,7 +93,7 @@ XPA.DB.RemoveBan = function(id)
 	local q = db:query("SELECT * FROM xpa_bans WHERE id = " .. SQLStr(id))
 	q.onSuccess = function(_, data)
 		if #data ~= 0 then
-			db:query("DELETE * FROM xpa_bans WHERE id = " .. SQLStr(id)):start()
+			db:query("DELETE FROM xpa_bans WHERE id = " .. SQLStr(id)):start()
 		end
 	end
 	q:start()
@@ -129,7 +129,7 @@ XPA.DB.RemoveRestrictions = function(id)
 	local q = db:query("SELECT * FROM xpa_restrictions WHERE id = " .. SQLStr(id))
 	q.onSuccess = function(_, data)
 		if #data ~= 0 then
-			db:query("DELETE * FROM xpa_restrictions WHERE id = " .. SQLStr(id)):start()
+			db:query("DELETE FROM xpa_restrictions WHERE id = " .. SQLStr(id)):start()
 		end
 	end
 	q:start()
@@ -140,7 +140,7 @@ XPA.DB.AddMember = function(id, rank)
 	q.onSuccess = function(_, data)
 		if #data ~= 0 then
 			if not rank or rank == "user" then
-				db:query("DELETE * FROM xpa_members WHERE id = " .. SQLStr(id)):start()
+				db:query("DELETE FROM xpa_members WHERE id = " .. SQLStr(id)):start()
 			else
 				db:query("UPDATE xpa_members SET rank = " .. SQLStr(rank) .. " WHERE id = " .. SQLStr(id)):start()
 			end
