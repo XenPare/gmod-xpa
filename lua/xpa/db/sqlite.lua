@@ -66,6 +66,23 @@ XPA.DB.RemoveBan = function(id)
 	end
 end
 
+XPA.DB.UpdateBans = function(found)
+	local bans = sql.Query("SELECT * FROM xpa_bans")
+	for _, data in pairs(bans) do
+		local id = data.id
+		if not found[id] then
+			local d = table.Copy(data)
+			d.id = nil
+			found[id] = d
+		end
+		local pl = XPA.FindPlayer(id)
+		if IsValid(pl) then
+			pl:Kick(data.reason)
+		end
+	end
+	XPA.Bans = found
+end
+
 XPA.DB.SetRestriction = function(id, mute, gag, pban)
 	local ex = sql.Query("SELECT * FROM xpa_restrictions WHERE id = " .. SQLStr(id))
 	if ex then

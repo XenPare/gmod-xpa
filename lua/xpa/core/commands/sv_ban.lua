@@ -160,23 +160,13 @@ timer.Create("XPA Bans Update", XPA.Config.BansUpdate, 0, function()
 				end
 				local pl = XPA.FindPlayer(id)
 				if IsValid(pl) then
-					pl:Kick(found[id].reason)
+					pl:Kick(data.reason)
 				end
 			end
 			XPA.Bans = found
 		end)
 	elseif db == "sqlite" or db == "mysqloo" then 
-		local bans = sql.Query("SELECT * FROM xpa_bans")
-		for id, data in pairs(bans) do
-			if not found[id] then
-				found[id] = data
-			end
-			local pl = XPA.FindPlayer(id)
-			if IsValid(pl) then
-				pl:Kick(found[id].reason)
-			end
-		end
-		XPA.Bans = found
+		XPA.DB.UpdateBans(found)
 	end
 end)
 
