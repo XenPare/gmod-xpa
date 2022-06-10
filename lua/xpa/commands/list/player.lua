@@ -48,7 +48,7 @@ return "Player", "*", {
 				end
 			end
 
-			XPA.SendMsg(pl, target:Name() .. " has got " .. pl:Health() .. " health.")
+			XPA.SendMsg(pl, target:Name() .. " has got " .. target:Health() .. " health.")
 		end
 	},
 
@@ -105,7 +105,7 @@ return "Player", "*", {
 				end
 			end
 
-			XPA.SendMsg(pl, target:Name() .. " has got " .. pl:Armor() .. " armor.")
+			XPA.SendMsg(pl, target:Name() .. " has got " .. target:Armor() .. " armor.")
 		end
 	},
 
