@@ -1,8 +1,7 @@
 hook.Add("PhysgunPickup", "XPA PhysgunPickup", function(pl, ent)
-	if pl:IsAdmin() and IsValid(ent) and ent:GetClass() == "player" then
-		if ent:GetImmunity() > pl:GetImmunity() then
-			return
-		end
+	if pl:IsAdmin() and IsValid(ent) and ent:GetClass() == "player" and ent:GetImmunity() < pl:GetImmunity() then
+		ent:Freeze(true)
+		ent:SetMoveType(MOVETYPE_NOCLIP)
 		ent:GodEnable()
 		return true
 	end
@@ -14,19 +13,16 @@ hook.Add("PhysgunDrop", "XPA PhysgunDrop", function(pl, ent)
 	end
 
 	ent:SetMoveType(MOVETYPE_WALK)
-	ent:Freeze(false)
 	ent:GodDisable()
+	ent:Freeze(false)
 
 	if pl:GetImmunity() > ent:GetImmunity() then
-		ent:SetVelocity(ent:GetVelocity() * -1)
-		ent:SetMoveType(pl:KeyDown(IN_ATTACK2) and MOVETYPE_NOCLIP or MOVETYPE_WALK)
-		timer.Simple(0.001, function()
+		pl:SetSimpleTimer(0.001, function()
 			if pl:KeyDown(IN_ATTACK2) and IsValid(ent) and not ent:IsFrozen() then
+				ent:SetMoveType(pl:KeyDown(IN_ATTACK2) and MOVETYPE_NOCLIP or MOVETYPE_WALK)
 				ent:Freeze(true)
+				ent:SetVelocity(ent:GetVelocity() * -1)
 			end
 		end)
-	else
-		ent:SetMoveType(MOVETYPE_WALK)
-		ent:GodDisable()
 	end
 end)
