@@ -273,7 +273,7 @@ return "Punishment", "*", {
 				end
 			end
 
-			target:Ignite()
+			target:Extinguish()
 
 			local str = " has unignited " .. target:Name()
 			if IsValid(pl) then
