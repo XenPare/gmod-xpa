@@ -130,6 +130,7 @@ return "Punishment", "*", {
 		immunity = 1000,
 		icon = "icon16/basket_add.png",
 		visible = true,
+		string = true,
 		init = function()
 			XPA.Jail = {}
 			hook.Add("PlayerInitialSpawn", "XPA Jail", function(pl)
@@ -165,13 +166,15 @@ return "Punishment", "*", {
 			local time = tonumber(args[2]) or 300
 			target:Spawn()
 			target:Freeze(true)
-			XPA.Jail[id] = time
+			target:GodEnable()
 
+			XPA.Jail[id] = time
 			timer.Create("XPA Jail #" .. id, time, 1, function()
 				if not IsValid(target) or not XPA.Jail[id] then
 					return
 				end
 				target:Freeze(false)
+				target:GodDisable()
 				XPA.Jail[id] = nil
 			end)
 
@@ -207,6 +210,8 @@ return "Punishment", "*", {
 
 			target:Spawn()
 			target:Freeze(false)
+			target:GodDisable()
+
 			XPA.Jail[target:SteamID()] = nil
 			timer.Remove("XPA Jail #" .. target:SteamID())
 
