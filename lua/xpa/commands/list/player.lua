@@ -173,7 +173,7 @@ return "Player", "*", {
 		string = true,
 		init = function()
 			XPA.AvailableWeapons = {}  -- we don't want admins to spawn entities
-			for _, wep in pairs(weapons.GetList()) do
+			for _, wep in ipairs(weapons.GetList()) do
 				XPA.AvailableWeapons[wep.ClassName] = true
 			end
 		end,
@@ -181,7 +181,7 @@ return "Player", "*", {
 			local t = string.Explode(" ", arg)
 			local w = t[2]
 			local tbl = {}
-			for _, pl in pairs(player.GetAll()) do
+			for _, pl in ipairs(player.GetAll()) do
 				table.insert(tbl, "xpa " .. w .. ' "' .. pl:Name() .. '" "weapon_357"')
 			end
 			return tbl
@@ -236,7 +236,7 @@ return "Player", "*", {
 			pl:SetNWBool("XPA Cloaked", bool)
 			pl:SetNoDraw(bool)
 		
-			for _, v in pairs(pl:GetWeapons()) do
+			for _, v in ipairs(pl:GetWeapons()) do
 				v:SetNoDraw(bool)
 			end
 

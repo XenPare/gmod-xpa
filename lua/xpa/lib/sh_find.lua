@@ -34,34 +34,6 @@ function XPA.FindPlayer(info)
 end
 
 --[[
-	To find the biggest number
-]]
-
-function XPA.FindBiggest(tbl)
-	local biggest = 0
-	for i = 1, #tbl do
-		if tbl[i] > biggest then
-			biggest = tbl[i]
-		end
-	end
-	return biggest
-end
-
---[[
-	To find the smallest number
-]]
-
-function XPA.FindSmallest(tbl)
-	local smallest = math.huge
-	for i = 1, #tbl do
-		if tbl[i] < smallest then
-			smallest = tbl[i]
-		end
-	end
-	return smallest
-end
-
---[[
 	To check if a place is empty
 ]]
 
@@ -118,28 +90,4 @@ function XPA.FindEmptyPos(pos, ignore, distance, step, area)
 		end
 	end
 	return pos
-end
-
---[[
-	Sort table by names
-]]
-
-function XPA.NameSortedPlayers()
-	local plys = player.GetAll()
-	table.sort(plys, function(a, b) 
-		return a:Name() < b:Name() 
-	end)
-	return plys
-end
-
---[[
-	Sort table by team
-]]
-
-function XPA.TeamSortedPlayers()
-	local plys = player.GetAll()
-	table.sort(plys, function(a, b) 
-		return a:Team() < b:Team() 
-	end)
-	return plys
 end

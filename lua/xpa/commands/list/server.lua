@@ -109,7 +109,7 @@ return "Server", "*", {
 			local t = string.Explode(" ", arg)
 			local w = t[2]
 			local tbl = {}
-			for _, map in pairs(XPA.MapList) do
+			for _, map in ipairs(XPA.MapList) do
 				table.insert(tbl, "xpa " .. w .. ' "' .. map .. '"')
 			end
 			return tbl
@@ -131,7 +131,7 @@ return "Server", "*", {
 		init = function()
 			XPA.MapList = XPA.MapList or {}
 			local maps = file.Find("maps/*", "GAME")
-			for _, map in pairs(maps) do
+			for _, map in ipairs(maps) do
 				local mname = string.Explode(".bsp", map)[1]
 				if not map:find(".bsp") or table.HasValue(XPA.MapList, mname) then
 					continue
@@ -142,7 +142,7 @@ return "Server", "*", {
 		func = function(pl)
 			pl:ChatPrint("Check your console for the info")
 			pl:SendLua("print('Available maps:')")
-			for _, map in pairs(XPA.MapList) do
+			for _, map in ipairs(XPA.MapList) do
 				pl:SendLua("print('     " .. map .. "')")
 			end
 		end

@@ -2,7 +2,7 @@ local def_time = "1440"
 
 function XPA.BanForm(pl)
 	if istable(pl) then
-		for _, _pl in pairs(pl) do
+		for _, _pl in ipairs(pl) do
 			XPA.BanForm(_pl)
 		end
 		return

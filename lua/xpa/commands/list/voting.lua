@@ -70,7 +70,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 		init = function()
 			XPA.VoteMaps = {}
 			local maps = XPA.MapList
-			for _, map in pairs(maps) do
+			for _, map in ipairs(maps) do
 				if engine.ActiveGamemode() == "sandbox" or not string.find(map, "gm") then
 					XPA.VoteMaps[map] = {
 						voted = 0,
@@ -83,7 +83,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 			local t = string.Explode(" ", arg)
 			local w = t[2]
 			local tbl = {}
-			for _, map in pairs(XPA.MapList) do
+			for _, map in ipairs(XPA.MapList) do
 				table.insert(tbl, "xpa " .. w .. ' "' .. map .. '"')
 			end
 			return tbl
@@ -145,7 +145,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 				"Ghetto Drug Bust"
 			}
 
-			for id in pairs(XPA.GameTypes) do
+			for id in ipairs(XPA.GameTypes) do
 				XPA.VoteGames[id] = {
 					voted = 0,
 					voters = {}

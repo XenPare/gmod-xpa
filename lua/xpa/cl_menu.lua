@@ -19,7 +19,7 @@ local function runCommand(target, key, cmd)
 				cmd.name,
 				"Enter the required info",
 				"",
-				function(str) 
+				function(str)
 					RunConsoleCommand("xpa", key, str) 
 				end
 			)
@@ -34,7 +34,7 @@ local function runCommand(target, key, cmd)
 				"",
 				function(str) 
 					if istable(target) then
-						for _, pl in pairs(target) do
+						for _, pl in ipairs(target) do
 							if not IsValid(pl) then
 								LocalPlayer():ChatPrint("One or more player has disconnected")
 								return
@@ -60,7 +60,7 @@ local function runCommand(target, key, cmd)
 			)
 		else
 			if istable(target) then
-				for _, pl in pairs(target) do
+				for _, pl in ipairs(target) do
 					if not IsValid(pl) then
 						LocalPlayer():ChatPrint("One or more player has disconnected")
 						return
@@ -86,7 +86,7 @@ local function runCommand(target, key, cmd)
 	end
 end
 
-local function addPlayers(categories, commands, parent, list, key, cmd)
+local function addPlayers(parent, list, key, cmd)
 	local panel = vgui.Create("EditablePanel", parent)
 	panel:Dock(FILL)
 
@@ -109,13 +109,13 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 	scroll:Dock(FILL)
 
 	local selected, cfirst = {}, false
-	for id, team in pairs(team.GetAllTeams()) do
+	for id, tm in pairs(team.GetAllTeams()) do
 		local _list = vgui.Create("DCollapsibleCategory", scroll)
 		_list:Dock(TOP)
-		_list:SetLabel(team.Name)
+		_list:SetLabel(tm.Name)
 		_list.Players = 0
 
-		if #player.GetAll() >= 20 then
+		if #team.GetPlayers(id) > 9 then
 			_list:SetExpanded(false)
 		end
 
@@ -124,77 +124,82 @@ local function addPlayers(categories, commands, parent, list, key, cmd)
 		layout:SetSpaceY(1)
 		layout:SetSpaceX(1)
 
-		for _, pl in SortedPairs(player.GetAll()) do
-			if pl:Team() == id then
-				_list.Players = _list.Players + 1
+		for _, pl in ipairs(player.GetAll()) do
+			if pl:Team() ~= id then
+				continue
+			end
 
-				local player = layout:Add("DButton")
-				player:SetFont("Default")
-				player:SetText(pl:Name())	
-				player:SetToolTip(pl:Alive() and "Alive" or "Dead")
-				player:SetSize(167, 24)
-				if pl:IsAdmin() then
-					player:SetColor(color_admin)
+			_list.Players = _list.Players + 1
+
+			local player = vgui.Create("DButton", layout)
+			player:SetFont("Default")
+			player:SetText(pl:Name())	
+			player:SetTooltip(pl:Alive() and "Alive" or "Dead")
+			player:SetSize(167, 24)
+
+			if pl:IsAdmin() then
+				player:SetColor(color_admin)
+				player:SetTooltip(player:GetTooltip() .. " (" .. pl:GetUserGroupTitle() .. ")")
+			end
+
+			player.Think = function(self)
+				if IsValid(pl) then
+					return
+				end
+				if selected[self] then
+					selected[self] = nil
+				end
+				_list.Players = _list.Players - 1
+				if _list.Players <= 0 then
+					_list:Remove()
+				end
+				self:Remove()
+			end
+
+			player.DoClick = function()
+				runCommand(pl, key, cmd)
+			end
+
+			player.DoRightClick = function(self)
+				self:SetEnabled(false)
+				selected[self] = pl
+
+				if cfirst then
+					return
 				end
 
-				player.Think = function(self)
-					if IsValid(pl) then
+				cfirst = true
+
+				local run = vgui.Create("DButton", panel)
+				run:Dock(BOTTOM)
+				run:DockMargin(0, 4, 0, 0)
+				run:SetTall(32)
+				run:SetText("Run command")
+				run:SetTooltip("LMB to run command\nRMB to reset selected players")
+			
+				run.Think = function(self)
+					if table.Count(selected) > 0 then
 						return
-					end
-					if selected[self] then
-						selected[self] = nil
-					end
-					_list.Players = _list.Players - 1
-					if _list.Players <= 0 then
-						_list:Remove()
 					end
 					self:Remove()
+					cfirst = false
 				end
 
-				player.DoClick = function()
-					runCommand(pl, key, cmd)
+				run.DoClick = function()
+					local cpls = {}
+					for _, cpl in pairs(selected) do
+						table.insert(cpls, cpl)
+					end
+					runCommand(cpls, key, cmd)
 				end
 
-				player.DoRightClick = function(self)
-					self:SetEnabled(false)
-					selected[self] = pl
-
-					if cfirst then
-						return
+				run.DoRightClick = function(self)
+					for button, _ in pairs(selected) do
+						selected[button] = nil
+						button:SetEnabled(true)
 					end
-					cfirst = true
-
-					local run = vgui.Create("DButton", panel)
-					run:Dock(BOTTOM)
-					run:DockMargin(0, 4, 0, 0)
-					run:SetTall(32)
-					run:SetText("Run command")
-					run:SetToolTip("LMB to run command\nRMB to reset selected players")
-				
-					run.Think = function(self)
-						if table.Count(selected) > 0 then
-							return
-						end
-						self:Remove()
-						cfirst = false
-					end
-
-					run.DoClick = function()
-						local cpls = {}
-						for _, cpl in pairs(selected) do
-							table.insert(cpls, cpl)
-						end
-						runCommand(cpls, key, cmd)
-					end
-
-					run.DoRightClick = function(self)
-						for button, _ in pairs(selected) do
-							selected[button] = nil
-							button:SetEnabled(true)
-						end
-						cfirst = false
-						self:Remove()
-					end
+					cfirst = false
+					self:Remove()
 				end
 			end
 		end
@@ -231,34 +236,36 @@ local function addCommands(categories, commands, parent)
 		layout:SetSpaceX(1)
 
 		for key, data in pairs(commands) do
-			if data.category == title then
-				list.Commands = list.Commands + 1
+			if data.category ~= title then
+				continue
+			end 
 
-				local act = layout:Add("DButton")
-				act:SetFont("Default")
-				act:SetText(data.name)	
-				if data.icon then
-					act:SetIcon(data.icon)
-				end
-				if data.tooltip then
-					act:SetToolTip("xpa " .. key .. "\n\n" .. data.tooltip)
+			list.Commands = list.Commands + 1
+
+			local act = vgui.Create("DButton", layout)
+			act:SetFont("Default")
+			act:SetText(data.name)	
+			if data.icon then
+				act:SetIcon(data.icon)
+			end
+			if data.tooltip then
+				act:SetTooltip("xpa " .. key .. "\n\n" .. data.tooltip)
+			else
+				act:SetTooltip("xpa " .. key)
+			end
+			act:SetSize(114, 24)
+
+			act.DoClick = function()
+				if data.self then
+					runCommand(nil, key, data)
 				else
-					act:SetToolTip("xpa " .. key)
+					panel:SetVisible(false)
+					addPlayers(parent, panel, key, data)
 				end
-				act:SetSize(114, 24)
+			end
 
-				act.DoClick = function()
-					if data.self then
-						runCommand(nil, key, data)
-					else
-						panel:SetVisible(false)
-						addPlayers(categories, commands, parent, panel, key, data)
-					end
-				end
-
-				if data.opened and not list:GetExpanded() then
-					list:SetExpanded(true)
-				end
+			if data.opened and not list:GetExpanded() then
+				list:SetExpanded(true)
 			end
 		end
 
