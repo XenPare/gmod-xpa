@@ -1,7 +1,7 @@
 XPA = XPA or {}
 
 XPA.Version = "4.1"
-XPA.Build = "20/06/22"
+XPA.Build = "22/06/22"
 XPA.Author = "crester"
 
 AddCSLuaFile("xpa/lib/_include.lua")
@@ -11,6 +11,8 @@ if SERVER then
 	util.AddNetworkString("XPA Menu") -- xpa/cl_menu.lua
 	util.AddNetworkString("XPA Finder") -- xpa/core/menus/cl_finder.lua
 else
+	CreateClientConVar("xpa_touchplayers", "1", true, true, "Enable/disable whether you can pick up players with physgun", 0, 1)
+
 	include("xpa/lib/_include.lua")
 end
 

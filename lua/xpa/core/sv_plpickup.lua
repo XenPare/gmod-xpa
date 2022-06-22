@@ -1,5 +1,5 @@
 hook.Add("PhysgunPickup", "XPA PhysgunPickup", function(pl, ent)
-	if pl:IsAdmin() and IsValid(ent) and ent:GetClass() == "player" and ent:GetImmunity() < pl:GetImmunity() then
+	if pl:IsAdmin() and pl:GetInfoNum("xpa_touchplayers", 1) == 1 and IsValid(ent) and ent:GetClass() == "player" and ent:GetImmunity() < pl:GetImmunity() then
 		ent:Freeze(true)
 		ent:SetMoveType(MOVETYPE_NOCLIP)
 		ent:GodEnable()
