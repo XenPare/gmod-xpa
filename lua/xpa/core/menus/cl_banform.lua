@@ -7,8 +7,9 @@ function XPA.BanForm(pl)
 		end
 		return
 	end
-	
+
 	local name = pl:Name()
+	local steamid = pl:SteamID()
 
 	local fr = vgui.Create("DFrame")
 	fr:SetTitle("Ban " .. name)
@@ -23,7 +24,7 @@ function XPA.BanForm(pl)
 	time:SetTall(28)
 	time:SetText(def_time)
 
-	time.Think = function(self, w, h) 
+	time.Think = function(self, w, h)
 		if self:IsEditing() and self:GetValue() == def_time then
 			self:SetText("")
 		end
@@ -38,7 +39,7 @@ function XPA.BanForm(pl)
 	reason:SetTall(28)
 	reason:SetText("Enter the reason")
 
-	reason.Think = function(self) 
+	reason.Think = function(self)
 		if self:IsEditing() and self:GetValue() == "Enter the reason" then
 			self:SetText("")
 		end
@@ -77,6 +78,6 @@ function XPA.BanForm(pl)
 
 	ban.DoClick = function()
 		fr:Remove()
-		RunConsoleCommand("xpa", "ban", pl:SteamID(), time:GetValue(), reason:GetValue())
+		RunConsoleCommand("xpa", "ban", steamid, time:GetValue(), reason:GetValue())
 	end
 end
