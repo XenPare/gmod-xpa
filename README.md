@@ -11,6 +11,7 @@
 * Firebase
 * SQLite
 # Commands
+Use "xpa help" to get an ingame list.
 <details>
 <summary>Click me!</summary>
 * Menus:
