@@ -9,7 +9,13 @@ return "Menus", "*", {
 		visible = true,
 		self = true,
 		func = function(pl)
-			XPA.SendMsg(pl, "XenPare Administration Experience " .. XPA.Version .. ", build from " .. XPA.Build .. " by " .. XPA.Author)
+			local msg = "XenPare Administration Experience " .. XPA.Version .. ", build from " .. XPA.Build .. " by " .. XPA.Author
+
+			if IsValid(pl) then
+				XPA.SendMsg(pl, msg)
+			else
+				MsgC(Color(0, 160, 255), msg)
+			end
 		end
 	},
 
@@ -23,6 +29,10 @@ return "Menus", "*", {
 		visible = true,
 		self = true,
 		func = function(pl)
+			if not IsValid(pl) then
+				return
+			end
+
 			local cmp = util.Compress(util.TableToJSON(XPA.Playtime))
 			local len = #cmp
 			net.Start("XPA Finder")
@@ -43,6 +53,10 @@ return "Menus", "*", {
 		icon = "icon16/help.png",
 		self = true,
 		func = function(pl)
+			if not IsValid(pl) then
+				return
+			end
+
 			local init = table.Copy(XPA.Commands)
 			for cmd, data in pairs(init) do
 				if data.immunity then

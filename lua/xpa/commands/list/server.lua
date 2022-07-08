@@ -36,8 +36,8 @@ return "Server", "*", {
 
 				if db == "firebase" then
 					local cur_rank, cur_rank_pos = ""
-					for name, data in pairs(XPA.Ranks) do 
-						if not data.members then 
+					for name, data in pairs(XPA.Ranks) do
+						if not data.members then
 							continue
 						end
 						if table.HasValue(data.members, id) then
@@ -140,10 +140,51 @@ return "Server", "*", {
 			end
 		end,
 		func = function(pl)
-			pl:ChatPrint("Check your console for the info")
-			pl:SendLua("print('Available maps:')")
-			for _, map in ipairs(XPA.MapList) do
-				pl:SendLua("print('     " .. map .. "')")
+			if IsValid(pl) then
+				pl:ChatPrint("Check your console for the info")
+				pl:SendLua("print('Available maps:')")
+				for _, map in ipairs(XPA.MapList) do
+					pl:SendLua("print('     " .. map .. "')")
+				end
+			else
+				print("Available maps:")
+				for _, map in ipairs(XPA.MapList) do
+					print("     " .. map)
+				end
+			end
+		end
+	},
+
+	--[[
+		xpa help
+	]]
+
+	["help"] = {
+		name = "Help",
+		icon = "icon16/help.png",
+		self = true,
+		func = function(pl)
+			if IsValid(pl) then
+				pl:ChatPrint("Check your console for the info")
+				pl:SendLua("print('Available commands:')")
+				for _, cat in ipairs(XPA.GetCommandCategories()) do
+					pl:SendLua([[print("\n\n]] .. cat .. [[:")]])
+					for cmd, d in pairs(XPA.Commands) do
+						if d.category == cat then
+							pl:SendLua([[print("	xpa ]] .. cmd .. [[ (]] .. d.name .. [[)")]])
+						end
+					end
+				end
+			else
+				print('Available commands:')
+				for _, cat in ipairs(XPA.GetCommandCategories()) do
+					print("\n\n" .. cat .. ":")
+					for cmd, d in pairs(XPA.Commands) do
+						if d.category == cat then
+							print("     xpa " .. cmd .. " (" .. d.name .. ")")
+						end
+					end
+				end
 			end
 		end
 	},
@@ -158,10 +199,17 @@ return "Server", "*", {
 		visible = true,
 		self = true,
 		func = function(pl)
-			pl:ChatPrint("Check your console for the info")
-			pl:SendLua("print('Available teams:')")
-			for index, data in pairs(team.GetAllTeams()) do
-				pl:SendLua("print('     [" .. index .. "]: " .. data.Name .. "')")
+			if IsValid(pl) then
+				pl:ChatPrint("Check your console for the info")
+				pl:SendLua("print('Available teams:')")
+				for index, data in pairs(team.GetAllTeams()) do
+					pl:SendLua("print('     [" .. index .. "]: " .. data.Name .. "')")
+				end
+			else
+				print("Available teams:")
+				for index, data in pairs(team.GetAllTeams()) do
+					print("    [" .. index .. "]: " .. data.name)
+				end
 			end
 		end
 	},
