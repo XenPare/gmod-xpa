@@ -12,7 +12,7 @@ return "DarkRP", "darkrp", {
 		visible = true,
 		string = true,
 		check = function()
-			return not DarkRP.disabledDefaults["hungermod"]
+			return DarkRP and not DarkRP.disabledDefaults["hungermod"] or false
 		end,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
