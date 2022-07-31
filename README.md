@@ -11,7 +11,9 @@
 * Firebase
 * SQLite
 # Commands
-Use "xpa help" to get an ingame list.
+Use "xpa help" to get an ingame list.<br>
+>Keep in mind that there are aliases so you don't have to type entirely !teleport but you can also type !tp and !tele.<br>
+>This is provided for the most part of the commands so you can type commands instinctively and it would be ok in the most cases.
 <details>
 <summary>Click me!</summary>
 * Menus:
