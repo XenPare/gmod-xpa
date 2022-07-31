@@ -39,6 +39,10 @@ hook.Add("Initialize", "XPA Command Register", function()
 			if data.aliases then
 				for _, alias in ipairs(data.aliases) do
 					commands[alias] = data
+					commands[alias].aliases = nil
+					if commands[alias].visible then
+						commands[alias].visible = false
+					end
 				end
 			end
 			if data.init then
