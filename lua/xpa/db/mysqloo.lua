@@ -198,7 +198,7 @@ timer.Simple(0.5, function()
 	local qp = db:query("SELECT * FROM xpa_playtime")
 	qp.onSuccess = function(_, data)
 		if #data ~= 0 then
-			for _, d in pairs(data) do 
+			for _, d in pairs(data) do
 				XPA.Playtime[d.id] = {
 					name = d.name,
 					time = d.time
@@ -212,7 +212,7 @@ timer.Simple(0.5, function()
 	local qb = db:query("SELECT * FROM xpa_bans")
 	qb.onSuccess = function(_, data)
 		if #data ~= 0 then
-			for _, d in pairs(data) do 
+			for _, d in pairs(data) do
 				XPA.Bans[d.id] = {
 					reason = d.reason,
 					time = d.time,
@@ -227,7 +227,7 @@ timer.Simple(0.5, function()
 	local qr = db:query("SELECT * FROM xpa_restrictions")
 	qr.onSuccess = function(_, data)
 		if #data ~= 0 then
-			for _, d in pairs(data) do 
+			for _, d in pairs(data) do
 				XPA.Restrictions[d.id] = {
 					gag = tobool(d.gag),
 					mute = tobool(d.mute),

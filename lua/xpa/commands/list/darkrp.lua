@@ -6,6 +6,7 @@ return "DarkRP", "darkrp", {
 
 	["hg"] = {
 		name = "Set hunger",
+		aliases = {"hunger", "sethunger", "sethg"},
 		immunity = 1000,
 		icon = "icon16/cup_add.png",
 		visible = true,
@@ -37,6 +38,7 @@ return "DarkRP", "darkrp", {
 
 	["setjob"] = {
 		name = "Set job",
+		aliases = {"job"},
 		immunity = 1000,
 		icon = "icon16/user.png",
 		visible = true,
@@ -53,7 +55,7 @@ return "DarkRP", "darkrp", {
 				end
 			end
 
-			local toChange = args[2] or TEAM_CITIZEN        
+			local toChange = args[2] or TEAM_CITIZEN
 			for team, data in pairs(team.GetAllTeams()) do
 				if team == tonumber(toChange) or string.lower(data.Name) == string.lower(toChange or "") then
 					local setTeam = target.changeTeam or target.SetTeam
@@ -124,6 +126,7 @@ return "DarkRP", "darkrp", {
 
 	["pban"] = {
 		name = "Police Ban",
+		aliases = {"policeban", "cpban"},
 		immunity = 1000,
 		icon = "icon16/controller_delete.png",
 		visible = true,
@@ -200,6 +203,7 @@ return "DarkRP", "darkrp", {
 
 	["unpban"] = {
 		name = "Police UnBan",
+		aliases = {"unpoliceban", "uncpban"},
 		immunity = 1000,
 		icon = "icon16/controller_add.png",
 		visible = true,

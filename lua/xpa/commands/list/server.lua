@@ -6,6 +6,7 @@ return "Server", "*", {
 
 	["setrank"] = {
 		name = "Set rank",
+		aliases = {"setgroup", "setusergroup", "setuser", "adduser"},
 		icon = "icon16/key.png",
 		visible = true,
 		string = true,
@@ -75,6 +76,11 @@ return "Server", "*", {
 					XPA.DB.AddMember(id, rank)
 				end
 			end
+
+			local log = (IsValid(pl) and pl:Name() or "Console") .. " has changed " .. (IsValid(target) and target:Name() or id) .. "'s rank to " .. rank
+
+			XPA.MsgC(log)
+			XPA.AChatLog(log)
 		end
 	},
 
@@ -100,6 +106,7 @@ return "Server", "*", {
 
 	["map"] = {
 		name = "Change map",
+		aliases = {"changelevel", "changemap", "setmap"},
 		icon = "icon16/map.png",
 		visible = true,
 		self = true,
@@ -125,6 +132,7 @@ return "Server", "*", {
 
 	["maplist"] = {
 		name = "Map list",
+		aliases = {"getmaps", "maps"},
 		icon = "icon16/layout.png",
 		visible = true,
 		self = true,
@@ -195,6 +203,7 @@ return "Server", "*", {
 
 	["teamlist"] = {
 		name = "Team list",
+		aliases = {"getteams", "teams"},
 		icon = "icon16/folder_database.png",
 		visible = true,
 		self = true,

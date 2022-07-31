@@ -39,6 +39,7 @@ xpa hp [steamid/name/uid> [number]<br>
 xpa gethp [steamid/name/uid]<br>
 xpa ar [steamid/name/uid] [number]<br>
 xpa getar [steamid/name/uid]<br>
+xpa god [steamid/name/uid]<br>
 xpa weapon [steamid/name/uid] <classname><br>
 xpa fs [steamid/name/uid] (family sharing check)<br>
 xpa noclip<br>

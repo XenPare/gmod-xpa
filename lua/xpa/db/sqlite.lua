@@ -133,7 +133,7 @@ end
 
 timer.Simple(0.5, function()
 	local playtime = sql.Query("SELECT * FROM xpa_playtime")
-	for _, data in pairs(playtime) do 
+	for _, data in pairs(playtime) do
 		XPA.Playtime[data.id] = {
 			name = data.name,
 			time = data.time
@@ -141,7 +141,7 @@ timer.Simple(0.5, function()
 	end
 
 	local bans = sql.Query("SELECT * FROM xpa_bans")
-	for _, data in pairs(bans) do 
+	for _, data in pairs(bans) do
 		XPA.Bans[data.id] = {
 			reason = data.reason,
 			time = data.time,
@@ -150,7 +150,7 @@ timer.Simple(0.5, function()
 	end
 
 	local restrictions = sql.Query("SELECT * FROM xpa_restrictions")
-	for _, data in pairs(bans) do 
+	for _, data in pairs(bans) do
 		XPA.Restrictions[data.id] = {
 			gag = tobool(data.gag),
 			mute = tobool(data.mute),

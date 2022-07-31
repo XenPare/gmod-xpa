@@ -62,6 +62,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 
 	["votemap"] = {
 		name = "VoteMap",
+		aliases = {"rtv"},
 		icon = "icon16/map.png",
 		visible = true,
 		string = true,
@@ -89,7 +90,7 @@ return "Voting", "sandbox/groundcontrol/terrortown/classicjb/fbl", {
 			return tbl
 		end,
 		func = function(pl, args)
-			local map = args[1] 
+			local map = args[1]
 			if not IsValid(pl) or not map then
 				return
 			end

@@ -5,6 +5,7 @@ return "Moving", "*", {
 
 	["teleport"] = {
 		name = "Teleport",
+		aliases = {"tp", "bring", "tele"},
 		immunity = 1000,
 		icon = "icon16/arrow_down.png",
 		visible = true,
@@ -65,8 +66,8 @@ return "Moving", "*", {
 			end
 
 			pl:ExitVehicle()
-			if not pl:Alive() then 
-				pl:Spawn() 
+			if not pl:Alive() then
+				pl:Spawn()
 			end
 
 			pl.ReturnPos = pl:GetPos()

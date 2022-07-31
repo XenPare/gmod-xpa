@@ -56,7 +56,7 @@ function XPA.Ban(id, time, reason, banner)
 			})
 
 			-- Patch the banner
-			if bannerid then 
+			if bannerid then
 				XPA.DB.Write("xpa-bans/" .. idv, {
 					banner = bannerid
 				})
@@ -77,7 +77,7 @@ function XPA.Ban(id, time, reason, banner)
 		if bannerid then
 			XPA.Bans[idv].banner = bannerid
 		end
-		
+
 		-- DB Integration
 		if db == "firebase" then
 			XPA.DB.Write("xpa-bans/" .. id, {
@@ -122,7 +122,7 @@ function XPA.Unban(id)
 
 	if db == "firebase" then
 		XPA.DB.Read("xpa-bans", function(js)
-			local bans = util.JSONToTable(js) 
+			local bans = util.JSONToTable(js)
 			if bans[id] then
 				XPA.DB.Delete("xpa-bans/" .. id)
 				XPA.MsgC(id .. " has just been unbanned.")
@@ -153,7 +153,7 @@ timer.Create("XPA Bans Update", XPA.Config.BansUpdate, 0, function()
 	local found = table.Copy(XPA.Bans)
 	if db == "firebase" then
 		XPA.DB.Read("xpa-bans", function(js)
-			local loaded = util.JSONToTable(js) 
+			local loaded = util.JSONToTable(js)
 			for id, data in pairs(loaded) do
 				if not found[id] then
 					found[id] = data
@@ -165,7 +165,7 @@ timer.Create("XPA Bans Update", XPA.Config.BansUpdate, 0, function()
 			end
 			XPA.Bans = found
 		end)
-	elseif db == "sqlite" or db == "mysqloo" then 
+	elseif db == "sqlite" or db == "mysqloo" then
 		XPA.DB.UpdateBans(found)
 	end
 end)

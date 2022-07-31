@@ -74,11 +74,11 @@ local function addRestrictions(tbl, parent)
 
 	local function insert(id, tbl)
 		local args = {
-			id, 
-			tbl.gag and "Yes" or "No", 
+			id,
+			tbl.gag and "Yes" or "No",
 			tbl.mute and "Yes" or "No"
 		}
-		
+
 		if isdrp then
 			table.insert(args, tbl.pban and "Yes" or "No")
 		end
