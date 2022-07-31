@@ -154,7 +154,7 @@ return "Player", "*", {
 
 	["weapon"] = {
 		name = "Give weapon",
-		aliases = {"give", "wep", "givewep", "giveweapon"}
+		aliases = {"give", "wep", "givewep", "giveweapon"},
 		immunity = 1000,
 		icon = "icon16/gun.png",
 		visible = true,
