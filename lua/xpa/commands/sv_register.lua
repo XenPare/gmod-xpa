@@ -37,10 +37,10 @@ hook.Add("Initialize", "XPA Command Register", function()
 				end
 			end
 			if data.aliases then
+				local _data = table.Copy(data)
+				_data.aliases = nil
+				_data.visible = false
 				for _, alias in ipairs(data.aliases) do
-					local _data = table.Copy(data)
-					_data.aliases = nil
-					_data.visible = false
 					commands[alias] = _data
 				end
 			end
