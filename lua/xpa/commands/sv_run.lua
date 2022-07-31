@@ -1,7 +1,7 @@
 local commands = XPA.Commands or {}
 local selfargs = XPA.Config.SelfArgs
 concommand.Add(
-	"xpa", 
+	"xpa",
 	function(pl, cmd, args)
 		local command = commands[args[1]]
 		if not command then
@@ -28,7 +28,7 @@ concommand.Add(
 
 		local argstring = "with no args"
 		if #nargs > 0 then
-			argstring = "with args: " .. table.ToString(nargs)
+			argstring = "with args: " .. table.concat(nargs, ", ")
 		end
 
 		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)
@@ -38,7 +38,7 @@ concommand.Add(
 
 		local foundarg = tobool(arg:find("[%a]+"))
 		if not foundarg then
-			for command in pairs(commands) do 
+			for command in pairs(commands) do
 				table.insert(tbl, "xpa " .. command)
 			end
 		else
@@ -49,7 +49,7 @@ concommand.Add(
 			if command then
 				if command.autocompletion then
 					tbl = command.autocompletion(arg)
-				elseif not command.self then 
+				elseif not command.self then
 					local hstring = command.string
 					for _, pl in pairs(player.GetAll()) do
 						table.insert(tbl, "xpa " .. w .. ' "' .. pl:Name() .. '" ' .. (hstring and '"100"' or ""))
@@ -88,7 +88,7 @@ hook.Add("PlayerSay", "XPA Chat Commands", function(pl, text, team)
 
 		local argstring = "with no args"
 		if #args > 0 then
-			argstring = "with args: " .. table.ToString(args)
+			argstring = "with args: " .. table.concat(args, ", ")
 		end
 
 		XPA.MsgC((IsValid(pl) and pl:Name() or "Server") .. ' has executed "' .. command.name  .. '" command ' .. argstring)

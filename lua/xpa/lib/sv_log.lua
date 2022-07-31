@@ -4,7 +4,7 @@ end
 
 function XPA.ChatLog(str)
 	for _, pl in pairs(player.GetAll()) do
-		if pl:GetImmunity() <= 0 then 
+		if pl:GetImmunity() <= 0 then
 			pl:ChatPrint(str)
 		end
 	end

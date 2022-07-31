@@ -76,6 +76,11 @@ return "Server", "*", {
 					XPA.DB.AddMember(id, rank)
 				end
 			end
+
+			local log = (IsValid(pl) and pl:Name() or "Console") .. " has changed " .. (IsValid(target) and target:Name() or id) .. "'s rank to " .. rank
+
+			XPA.MsgC(log)
+			XPA.AChatLog(log)
 		end
 	},
 

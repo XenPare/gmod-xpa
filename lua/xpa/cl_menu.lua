@@ -20,7 +20,7 @@ local function runCommand(target, key, cmd)
 				"Enter the required info",
 				"",
 				function(str)
-					RunConsoleCommand("xpa", key, str) 
+					RunConsoleCommand("xpa", key, str)
 				end
 			)
 		else
@@ -32,7 +32,7 @@ local function runCommand(target, key, cmd)
 				cmd.name,
 				"Enter the required info",
 				"",
-				function(str) 
+				function(str)
 					if istable(target) then
 						for _, pl in ipairs(target) do
 							if not IsValid(pl) then
@@ -43,7 +43,7 @@ local function runCommand(target, key, cmd)
 							if pl:IsBot() then
 								id = pl:Name()
 							end
-							RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str))) 
+							RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str)))
 						end
 					else
 						if not IsValid(target) then
@@ -54,7 +54,7 @@ local function runCommand(target, key, cmd)
 						if target:IsBot() then
 							id = target:Name()
 						end
-						RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str))) 
+						RunConsoleCommand("xpa", key, id, unpack(XPA.ParseArgs(str)))
 					end
 				end
 			)
@@ -69,7 +69,7 @@ local function runCommand(target, key, cmd)
 					if pl:IsBot() then
 						id = pl:Name()
 					end
-					RunConsoleCommand("xpa", key, id) 
+					RunConsoleCommand("xpa", key, id)
 				end
 			else
 				if not IsValid(target) then
@@ -133,7 +133,7 @@ local function addPlayers(parent, list, key, cmd)
 
 			local player = vgui.Create("DButton", layout)
 			player:SetFont("Default")
-			player:SetText(pl:Name())	
+			player:SetText(pl:Name())
 			player:SetTooltip(pl:Alive() and "Alive" or "Dead")
 			player:SetSize(167, 24)
 
@@ -176,7 +176,7 @@ local function addPlayers(parent, list, key, cmd)
 				run:SetTall(32)
 				run:SetText("Run command")
 				run:SetTooltip("LMB to run command\nRMB to reset selected players")
-			
+
 				run.Think = function(self)
 					if table.Count(selected) > 0 then
 						return
@@ -219,8 +219,8 @@ local function addCommands(categories, commands, parent)
 	local scroll = vgui.Create("DScrollPanel", panel)
 	scroll:Dock(FILL)
 
-	table.sort(categories, function(a, b) 
-		return #a > #b 
+	table.sort(categories, function(a, b)
+		return #a > #b
 	end)
 
 	for _, title in SortedPairs(categories) do
@@ -228,7 +228,7 @@ local function addCommands(categories, commands, parent)
 		list:Dock(TOP)
 		list:SetLabel(title)
 		list:SetExpanded(false)
-		list.Commands = 0	
+		list.Commands = 0
 
 		local layout = vgui.Create("DIconLayout", list)
 		layout:Dock(FILL)
@@ -238,13 +238,13 @@ local function addCommands(categories, commands, parent)
 		for key, data in pairs(commands) do
 			if data.category ~= title then
 				continue
-			end 
+			end
 
 			list.Commands = list.Commands + 1
 
 			local act = vgui.Create("DButton", layout)
 			act:SetFont("Default")
-			act:SetText(data.name)	
+			act:SetText(data.name)
 			if data.icon then
 				act:SetIcon(data.icon)
 			end
@@ -277,9 +277,9 @@ local function addCommands(categories, commands, parent)
 end
 
 net.Receive("XPA Menu", function()
-	if IsValid(fr) then 
+	if IsValid(fr) then
 		fr:Close()
-		return 
+		return
 	end
 
 	local categories = net.ReadTable()
@@ -297,7 +297,7 @@ net.Receive("XPA Menu", function()
 	fr.Close = function()
 		fr:MoveTo(-1000, 25, 0.2, 0, -1, function()
 			fr:Remove()
-		end)	
+		end)
 	end
 
 	local wide, tall = 375, ScrH() / 1.8

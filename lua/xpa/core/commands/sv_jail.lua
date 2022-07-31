@@ -1,7 +1,7 @@
 local tag = "XPA Jail"
 local function isJailed(pl)
-	if XPA.Jail[pl:SteamID()] then 
-		return false 
+	if XPA.Jail[pl:SteamID()] then
+		return false
 	end
 end
 

@@ -1,6 +1,6 @@
 local skids = {}
 timer.Simple(0, function()
-	http.Fetch("https://raw.github.com/cresterienvogel/Skids/master/skids.json", 
+	http.Fetch("https://raw.github.com/cresterienvogel/Skids/master/skids.json",
 		function(content)
 			skids = util.JSONToTable(content)
 		end

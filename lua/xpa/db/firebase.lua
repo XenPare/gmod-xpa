@@ -59,7 +59,7 @@ timer.Simple(0.5, function()
 		end
 		http.Fetch(db_link .. path, function(html)
 			meth(html)
-		end, 
+		end,
 		function(err)
 			XPA.DB.Print("HTTP: " .. err)
 		end)
@@ -94,18 +94,18 @@ timer.Simple(0.5, function()
 	end
 
 	XPA.DB.Read("xpa-playtime", function(json)
-		XPA.Playtime = util.JSONToTable(json) 
+		XPA.Playtime = util.JSONToTable(json)
 	end)
 
 	XPA.DB.Read("xpa-ranks", function(json)
-		XPA.Ranks = util.JSONToTable(json) 
+		XPA.Ranks = util.JSONToTable(json)
 	end)
 
 	XPA.DB.Read("xpa-bans", function(json)
-		XPA.Bans = util.JSONToTable(json) 
+		XPA.Bans = util.JSONToTable(json)
 	end)
 
 	XPA.DB.Read("xpa-restrictions", function(json)
-		XPA.Restrictions = util.JSONToTable(json) 
+		XPA.Restrictions = util.JSONToTable(json)
 	end)
 end)

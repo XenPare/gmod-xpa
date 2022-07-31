@@ -11,10 +11,10 @@ function XPA.ParseArgs(str)
 
 	for i = 1, #str do
 		local char = str[i]
-		if escaped then 
-			chr = chr .. char 
-			escaped = false 
-			continue 
+		if escaped then
+			chr = chr .. char
+			escaped = false
+			continue
 		end
 
 		if char:find(StringPattern) and not instr and not escaped then
@@ -37,8 +37,8 @@ function XPA.ParseArgs(str)
 		end
 	end
 
-	if chr:Trim():len() ~= 0 then 
-		table.insert(ret, chr) 
+	if chr:Trim():len() ~= 0 then
+		table.insert(ret, chr)
 	end
 
 	return ret

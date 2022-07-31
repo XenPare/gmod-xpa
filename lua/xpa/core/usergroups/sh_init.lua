@@ -21,7 +21,7 @@ function meta:IsAdmin()
 end
 
 --[[
-	Values 
+	Values
 ]]
 
 function meta:GetUserGroupTitle()

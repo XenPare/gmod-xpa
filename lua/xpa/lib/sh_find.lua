@@ -3,8 +3,8 @@
 ]]
 
 function XPA.FindPlayer(info)
-	if not info or info == "" then 
-		return nil 
+	if not info or info == "" then
+		return nil
 	end
 
 	local pls = player.GetAll()
@@ -48,9 +48,9 @@ local content_blacklist = {
 function XPA.IsEmpty(vector, ignore)
 	ignore = ignore or {}
 
-	local point, a = util.PointContents(vector), not table.HasValue(content_blacklist, point) 
-	if not a then 
-		return false 
+	local point, a = util.PointContents(vector), not table.HasValue(content_blacklist, point)
+	if not a then
+		return false
 	end
 
 	local b = true
@@ -79,7 +79,7 @@ function XPA.FindEmptyPos(pos, ignore, distance, step, area)
 			if XPA.IsEmpty(pos + Vector(k, 0, 0), ignore) and XPA.IsEmpty(pos + Vector(k, 0, 0) + area, ignore) then
 				return pos + Vector(k, 0, 0)
 			end
-			
+
 			if XPA.IsEmpty(pos + Vector(0, k, 0), ignore) and XPA.IsEmpty(pos + Vector(0, k, 0) + area, ignore) then
 				return pos + Vector(0, k, 0)
 			end

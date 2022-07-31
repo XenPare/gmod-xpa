@@ -130,7 +130,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(target) then 
+			if IsValid(target) then
 				target:SetNWBool("XPA Mute", true)
 			end
 
@@ -185,7 +185,7 @@ return "Communication", "*", {
 				end
 			end
 
-			if IsValid(target) then 
+			if IsValid(target) then
 				target:SetNWBool("XPA Mute", false)
 			end
 
@@ -199,7 +199,7 @@ return "Communication", "*", {
 				XPA.DB.Write("xpa-restrictions/" .. id, {
 					mute = false
 				})
-			elseif db == "sqlite" or db == "mysqloo" then 
+			elseif db == "sqlite" or db == "mysqloo" then
 				XPA.DB.SetRestriction(id, false)
 			end
 
