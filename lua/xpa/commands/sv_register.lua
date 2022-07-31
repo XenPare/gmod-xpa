@@ -36,6 +36,11 @@ hook.Add("Initialize", "XPA Command Register", function()
 					continue
 				end
 			end
+			if data.aliases then
+				for _, alias in ipairs(data.aliases) do
+					commands[alias] = data
+				end
+			end
 			if data.init then
 				data.init()
 			end

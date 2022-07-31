@@ -263,6 +263,7 @@ return "Punishment", "*", {
 
 	["unignite"] = {
 		name = "UnIgnite",
+		aliases = {"extinguish"},
 		immunity = 1000,
 		icon = "icon16/weather_rain.png",
 		visible = true,
@@ -295,6 +296,7 @@ return "Punishment", "*", {
 
 	["slay"] = {
 		name = "Slay",
+		aliases = {"kill", "explode"},
 		immunity = 1000,
 		icon = "icon16/cross.png",
 		visible = true,

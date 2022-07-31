@@ -5,6 +5,7 @@ return "Player", "*", {
 
 	["hp"] = {
 		name = "Set health",
+		aliases = {"health", "sethealth", "sethp"},
 		immunity = 1000,
 		icon = "icon16/heart_add.png",
 		visible = true,
@@ -33,6 +34,7 @@ return "Player", "*", {
 
 	["gethp"] = {
 		name = "Get health",
+		aliases = {"gethealth"},
 		immunity = 1000,
 		icon = "icon16/heart.png",
 		visible = true,
@@ -58,6 +60,7 @@ return "Player", "*", {
 
 	["ar"] = {
 		name = "Set armor",
+		aliases = {"armor", "setarmor", "setar"},
 		immunity = 1000,
 		icon = "icon16/shield_add.png",
 		visible = true,
@@ -90,6 +93,7 @@ return "Player", "*", {
 
 	["getar"] = {
 		name = "Get armor",
+		aliases = {"getarmor"},
 		immunity = 1000,
 		icon = "icon16/shield.png",
 		visible = true,
@@ -115,6 +119,7 @@ return "Player", "*", {
 
 	["god"] = {
 		name = "God",
+		aliases = {"godmode"},
 		immunity = 1000,
 		icon = "icon16/pill.png",
 		visible = true,
@@ -130,34 +135,16 @@ return "Player", "*", {
 				end
 			end
 
-			target:GodEnable()
-			XPA.AChatLog(pl:Name() .. " has enabled god for " .. target:Name())
-		end
-	},
-
-	--[[
-		xpa ungod <steamid/name/userid>
-	]]
-
-	["ungod"] = {
-		name = "UnGod",
-		immunity = 1000,
-		icon = "icon16/pill_delete.png",
-		visible = true,
-		func = function(pl, args)
-			local target = XPA.FindPlayer(args[1])
-			if not IsValid(target) or not target:Alive() then
-				return
+			local change
+			if target:HasGodMode() then
+				target:GodDisable()
+				change = "disabled"
+			else
+				target:GodEnable()
+				change = "enabled"
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
-			end
-
-			target:GodDisable()
-			XPA.AChatLog(pl:Name() .. " has disabled god for " .. target:Name())
+			XPA.AChatLog(pl:Name() .. " has " .. change .. " god for " .. target:Name())
 		end
 	},
 
@@ -167,6 +154,7 @@ return "Player", "*", {
 
 	["weapon"] = {
 		name = "Give weapon",
+		aliases = {"give", "wep", "givewep", "giveweapon"}
 		immunity = 1000,
 		icon = "icon16/gun.png",
 		visible = true,
@@ -235,7 +223,7 @@ return "Player", "*", {
 			local bool, msg = not pl:GetNWBool("XPA Cloaked"), pl:GetNWBool("XPA Cloaked") and "Uncloaked" or "Cloaked"
 			pl:SetNWBool("XPA Cloaked", bool)
 			pl:SetNoDraw(bool)
-		
+
 			for _, v in ipairs(pl:GetWeapons()) do
 				v:SetNoDraw(bool)
 			end
@@ -256,6 +244,7 @@ return "Player", "*", {
 
 	["fs"] = {
 		name = "Fam. sharing",
+		aliases = {"familysharing", "famsharing", "famshar"},
 		immunity = 1000,
 		icon = "icon16/controller.png",
 		visible = true,
