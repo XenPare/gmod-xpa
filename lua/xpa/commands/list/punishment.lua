@@ -15,7 +15,7 @@ return "Punishment", "*", {
 
 			local target = args[1]
 			local time = tonumber(args[2]) or 1440
-			local reason = args[3] or "No reason provided"
+			local reason = args[3] and table.concat(args, " ", 3) or "No reason provided"
 			local preview = XPA.ConvertTime(time * 60)
 
 			if IsEntity(target) and IsValid(target) then
@@ -89,7 +89,7 @@ return "Punishment", "*", {
 		string = true,
 		func = function(pl, args)
 			local target = XPA.FindPlayer(args[1])
-			local reason = args[2] or "No reason provided"
+			local reason = args[2] and table.concat(args, " ", 2) or "No reason provided"
 
 			if not IsValid(target) then
 				return
@@ -101,17 +101,8 @@ return "Punishment", "*", {
 				end
 			end
 
-			local str
-			if reason ~= "No reason provided" then
-				_reason = table.Copy(args)
-				_reason[1] = nil
-				_reason = table.ClearKeys(_reason)
-				str = " has kicked " .. target:Name() .. " for: " .. table.concat(_reason, " ")
-				target:Kick(table.concat(_reason, " "))
-			else
-				str = " has kicked " .. target:Name() .. " for: " .. reason
-				target:Kick(reason)
-			end
+			local str = " has kicked " .. target:Name() .. " for: " .. reason
+			target:Kick(reason)
 
 			if IsValid(pl) then
 				XPA.ChatLogCompounded(pl:Name() .. str, pl:GetRankTitle() .. str)
