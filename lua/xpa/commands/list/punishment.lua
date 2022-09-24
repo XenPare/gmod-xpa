@@ -61,8 +61,8 @@ return "Punishment", "*", {
 		visible = true,
 		string = true,
 		func = function(pl, args)
-			local id = args[1] or 0
-			if id == 0 then
+			local id = args[1] or ""
+			if id == "" then
 				return
 			end
 

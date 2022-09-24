@@ -153,6 +153,10 @@ return "DarkRP", "darkrp", {
 				id = target:SteamID()
 			end
 
+			if id == "" then
+				return
+			end
+
 			if IsValid(pl) and IsValid(target) then
 				if target:GetImmunity() > pl:GetImmunity() then
 					return
@@ -214,6 +218,10 @@ return "DarkRP", "darkrp", {
 				id = args[1]
 			elseif IsValid(target) then
 				id = target:SteamID()
+			end
+
+			if id == "" then
+				return
 			end
 
 			if IsValid(pl) and IsValid(target) then

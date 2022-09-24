@@ -30,6 +30,10 @@ return "Server", "*", {
 				id = target:SteamID()
 			end
 
+			if id == "" then
+				return
+			end
+
 			if rank == "user" then
 				if IsValid(target) then
 					target:SetUserGroup(rank)

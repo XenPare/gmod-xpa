@@ -197,11 +197,9 @@ return "Player", "*", {
 		self = true,
 		visible = true,
 		func = function(pl, args)
-			if not IsValid(pl) then
-				return
+			if IsValid(pl) then
+				pl:SetMoveType(pl:GetMoveType() == MOVETYPE_WALK and MOVETYPE_NOCLIP or MOVETYPE_WALK)
 			end
-			local type = pl:GetMoveType() == MOVETYPE_WALK and MOVETYPE_NOCLIP or MOVETYPE_WALK
-			pl:SetMoveType(type)
 		end
 	},
 
