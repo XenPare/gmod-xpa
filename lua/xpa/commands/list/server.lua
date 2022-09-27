@@ -77,14 +77,19 @@ return "Server", "*", {
 
 					notify()
 				elseif db == "sqlite" or db == "mysqloo" then
-					XPA.DB.GetMemberRank(id, function(data)
-						if not table.IsEmpty(data) and pl:GetImmunity() < XPA.Ranks[data.rank] then
-							pl:ChatPrint("Target's rank is higher than yours!")
-						else
-							XPA.DB.AddMember(id, rank)
-							notify()
-						end
-					end)
+					if IsValid(pl) then
+						XPA.DB.GetMemberRank(id, function(data)
+							if not table.IsEmpty(data) and pl:GetImmunity() < XPA.Ranks[data.rank] then
+								pl:ChatPrint("Target's rank is higher than yours!")
+							else
+								XPA.DB.AddMember(id, rank)
+								notify()
+							end
+						end)
+					else
+						XPA.DB.AddMember(id, rank)
+						notify()
+					end
 				end
 			else
 				local imm = XPA.Ranks[rank]
