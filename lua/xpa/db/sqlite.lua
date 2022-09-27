@@ -126,9 +126,11 @@ XPA.DB.AddMember = function(id, rank)
 	end
 end
 
-XPA.DB.GetMemberRank = function(id)
-	local ex = sql.Query("SELECT * FROM xpa_members WHERE id = " .. SQLStr(id))
-	return ex and ex[1].rank or "user"
+XPA.DB.GetMemberRank = function(id, callback)
+	local data = sql.Query("SELECT * FROM xpa_members WHERE id = " .. SQLStr(id))
+	local rank = data and data[1].rank or "user"
+	callback(data and data[1] or {})
+	return rank
 end
 
 timer.Simple(0.5, function()

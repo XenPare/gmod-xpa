@@ -179,6 +179,14 @@ XPA.DB.AddMember = function(id, rank)
 	q:start()
 end
 
+XPA.DB.GetMemberRank = function(id, callback)
+	local q = db:query("SELECT * FROM xpa_members WHERE id = " .. SQLStr(id))
+	q.onSuccess = function(_, data)
+		callback(#data ~= 0 and data[1] or {})
+	end
+	q:start()
+end
+
 XPA.DB.SetMemberRank = function(id)
 	local q = db:query("SELECT * FROM xpa_members WHERE id = " .. SQLStr(id))
 	q.onSuccess = function(_, data)
