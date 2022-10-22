@@ -13,7 +13,7 @@ return "Punishment", "*", {
 				return
 			end
 
-			local target = args[1]
+			local target = XPA.FindPlayer(args[1])
 			local time = tonumber(args[2]) or 1440
 			local reason = args[3] and table.concat(args, " ", 3) or "No reason provided"
 			local preview = XPA.ConvertTime(time * 60)
