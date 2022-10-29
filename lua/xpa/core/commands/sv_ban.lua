@@ -174,7 +174,11 @@ end)
 	Ban validation hook
 ]]
 
-hook.Add("CheckPassword", "XPA Bans", function(id64)
+hook.Add("CheckPassword", "XPA Bans", function(id64, ip, svp, clp)
+	if svp ~= "" and svp ~= clp then
+		return false
+	end
+
 	local id = util.SteamIDFrom64(id64)
 	local banned, ban = XPA.IsBanned(id)
 	if banned then
