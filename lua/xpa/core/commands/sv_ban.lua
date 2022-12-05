@@ -16,14 +16,11 @@ function XPA.Ban(id, time, reason, banner)
 		reason = "No reason provided"
 	end
 
-	local bannerid
-	if banner then
-		bannerid = IsValid(banner) and banner:SteamID() or banner
-	end
+	local bannerid = IsValid(banner) and banner:SteamID() or "Server"
 
 	if not XPA.IsValidSteamID(id) then
 		local pl = id
-		if not IsEntity(id) then
+		if not IsValid(id) then
 			pl = XPA.FindPlayer(id)
 		end
 
@@ -33,7 +30,7 @@ function XPA.Ban(id, time, reason, banner)
 
 		local preview = "∞"
 		if time > 0 then
-			preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
+			preview = XPA.ConvertTime(time - os.time())
 		end
 
 		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
@@ -71,12 +68,9 @@ function XPA.Ban(id, time, reason, banner)
 		-- Local DB Integration
 		XPA.Bans[id] = {
 			time = time,
-			reason = reason
+			reason = reason,
+			banner = bannerid
 		}
-
-		if bannerid then
-			XPA.Bans[idv].banner = bannerid
-		end
 
 		-- DB Integration
 		if db == "firebase" then
@@ -102,7 +96,7 @@ function XPA.Ban(id, time, reason, banner)
 
 		local preview = "∞"
 		if time > 0 then
-			preview = XPA.ConvertTime(((time - os.time()) * 60) / 60)
+			preview = XPA.ConvertTime(time - os.time())
 		end
 
 		local ip, idv = string.Explode(":", pl:IPAddress())[1], pl:SteamID()
@@ -196,9 +190,7 @@ hook.Add("CheckPassword", "XPA Bans", function(id64, ip, svp, clp)
 			if os.time() >= time then
 				XPA.Unban(id)
 			else
-				local preview = ((time - os.time()) * 60) / 60
-				preview = XPA.ConvertTime(preview)
-				return false, "You are banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: " .. preview
+				return false, "You are banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: " .. XPA.ConvertTime(time - os.time())
 			end
 		else
 			return false, "You are banned.\nShame.\n\nReason: " .. ban.reason .. "\nRemaining: ∞"
