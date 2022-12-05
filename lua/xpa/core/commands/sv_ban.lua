@@ -3,7 +3,7 @@ XPA.Bans = XPA.Bans or {}
 local db = XPA.Config.Database
 
 --[[
-	XPA.Ban (Target ID, Ban Time, Ban reason)
+	XPA.Ban (Target ID, Ban Time, Ban reason, Banner)
 ]]
 
 function XPA.Ban(id, time, reason, banner)
@@ -16,9 +16,9 @@ function XPA.Ban(id, time, reason, banner)
 		reason = "No reason provided"
 	end
 
-	local bannerid = nil
-	if banner and banner ~= nil then
-		local bannerid = IsValid(banner) and banner:SteamID() or banner
+	local bannerid
+	if banner then
+		bannerid = IsValid(banner) and banner:SteamID() or banner
 	end
 
 	if not XPA.IsValidSteamID(id) then

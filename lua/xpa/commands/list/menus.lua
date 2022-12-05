@@ -59,11 +59,9 @@ return "Menus", "*", {
 
 			local init = table.Copy(XPA.Commands)
 			for cmd, data in pairs(init) do
-				if data.immunity then
-					if data.immunity > pl:GetImmunity() then
-						init[cmd] = nil
-						continue
-					end
+				if data.immunity and data.immunity > pl:GetImmunity() then
+					init[cmd] = nil
+					continue
 				end
 				if not data.visible then
 					init[cmd] = nil

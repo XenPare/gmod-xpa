@@ -16,10 +16,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local number = tonumber(args[2]) or 100
@@ -44,10 +42,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			XPA.SendMsg(pl, target:Name() .. " has got " .. target:Health() .. " health.")
@@ -71,10 +67,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local number = tonumber(args[2]) or 100
@@ -103,10 +97,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			XPA.SendMsg(pl, target:Name() .. " has got " .. target:Armor() .. " armor.")
@@ -129,10 +121,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local change
@@ -252,10 +242,8 @@ return "Player", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local ownerid =  util.SteamIDFrom64(target:OwnerSteamID64())

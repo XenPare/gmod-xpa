@@ -267,7 +267,7 @@ return "Server", "*", {
 					end
 				end
 			else
-				print('Available commands:')
+				print("Available commands:")
 				for _, cat in ipairs(XPA.GetCommandCategories()) do
 					print("\n\n" .. cat .. ":")
 					for cmd, d in pairs(XPA.Commands) do

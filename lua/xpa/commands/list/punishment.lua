@@ -18,12 +18,8 @@ return "Punishment", "*", {
 			local reason = args[3] and table.concat(args, " ", 3) or "No reason provided"
 			local preview = XPA.ConvertTime(time * 60)
 
-			if IsEntity(target) and IsValid(target) then
-				if IsValid(pl) then
-					if target:GetImmunity() > pl:GetImmunity() then
-						return
-					end
-				end
+			if (IsEntity(target) and IsValid(target)) and IsValid(pl) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			XPA.Ban(target, time, reason, pl)
@@ -95,10 +91,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local str = " has kicked " .. target:Name() .. " for: " .. reason
@@ -147,10 +141,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local id = target:SteamID()
@@ -193,10 +185,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:Spawn()
@@ -231,10 +221,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:Ignite(tonumber(args[2]) or 60)
@@ -264,10 +252,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:Extinguish()
@@ -297,10 +283,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:KillSilent()
@@ -329,10 +313,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:Freeze(true)
@@ -361,10 +343,8 @@ return "Punishment", "*", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:Freeze(false)
@@ -376,5 +356,5 @@ return "Punishment", "*", {
 				XPA.ChatLogCompounded("Server" .. str, "Server" .. str)
 			end
 		end
-	},
+	}
 }, true

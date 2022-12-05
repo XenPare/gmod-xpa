@@ -20,10 +20,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local number = tonumber(args[2]) or 100
@@ -49,10 +47,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local toChange = args[2] or TEAM_CITIZEN
@@ -82,10 +78,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			local number = tonumber(args[2]) or 300
@@ -109,10 +103,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if IsValid(pl) and target:GetImmunity() > pl:GetImmunity() then
+				return
 			end
 
 			target:unArrest()
@@ -157,10 +149,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then
@@ -186,10 +176,8 @@ return "DarkRP", "darkrp", {
 			end
 
 			-- Demote
-			if IsValid(target) then
-				if GAMEMODE.CivilProtection[target:Team()] then
-					target:changeTeam(GAMEMODE.DefaultTeam, true)
-				end
+			if IsValid(target) and GAMEMODE.CivilProtection[target:Team()] then
+				target:changeTeam(GAMEMODE.DefaultTeam, true)
 			end
 
 			local str = " has police banned " .. (IsValid(target) and target:Name() or id)
@@ -224,10 +212,8 @@ return "DarkRP", "darkrp", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then

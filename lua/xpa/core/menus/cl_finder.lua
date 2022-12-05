@@ -120,6 +120,7 @@ local function addBans(tbl, parent)
 	list:AddColumn("SteamID")
 	list:AddColumn("Remaining")
 	list:AddColumn("Reason")
+	list:AddColumn("Banner")
 
 	local search_panel = vgui.Create("EditablePanel", parent)
 	search_panel:Dock(TOP)
@@ -140,13 +141,13 @@ local function addBans(tbl, parent)
 		if id == "" then
 			for sid, v in pairs(tbl) do
 				local time = tonumber(v.time)
-				list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason)
+				list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason, v.banner or "Server")
 			end
 		else
 			for sid, v in pairs(tbl) do
 				local time, reason = tonumber(v.time), v.reason
 				if sid:find(id) or reason:lower():find(id:lower()) then
-					list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", reason)
+					list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", reason, v.banner or "Server")
 				end
 			end
 		end
@@ -154,7 +155,7 @@ local function addBans(tbl, parent)
 
 	for sid, v in pairs(tbl) do
 		local time = tonumber(v.time)
-		list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason)
+		list:AddLine(sid, time > 0 and (XPA.ConvertTime(((time - os.time()) * 60) / 60) ~= "" and XPA.ConvertTime(((time - os.time()) * 60) / 60) or "Expired") or "∞", v.reason, v.banner or "Server")
 	end
 
 	list.OnRowSelected = function(_, _, row)

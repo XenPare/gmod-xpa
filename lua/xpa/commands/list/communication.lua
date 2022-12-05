@@ -22,10 +22,8 @@ return "Communication", "*", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then
@@ -81,10 +79,8 @@ return "Communication", "*", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then
@@ -136,10 +132,8 @@ return "Communication", "*", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then
@@ -195,10 +189,8 @@ return "Communication", "*", {
 				return
 			end
 
-			if IsValid(pl) and IsValid(target) then
-				if target:GetImmunity() > pl:GetImmunity() then
-					return
-				end
+			if (IsValid(pl) and IsValid(target)) and (target:GetImmunity() > pl:GetImmunity()) then
+				return
 			end
 
 			if IsValid(target) then
