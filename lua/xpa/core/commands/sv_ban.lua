@@ -116,6 +116,10 @@ end
 ]]
 
 function XPA.Unban(id)
+	if not XPA.IsValidSteamID(id) then
+		return
+	end
+
 	if XPA.Bans[id] then
 		XPA.Bans[id] = nil
 	end
@@ -139,9 +143,14 @@ end
 ]]
 
 function XPA.IsBanned(id)
+	if not XPA.IsValidSteamID(id) then
+		return false
+	end
+
 	if XPA.Bans[id] then
 		return true, XPA.Bans[id]
 	end
+
 	return false
 end
 

@@ -13,33 +13,26 @@ return "Punishment", "*", {
 				return
 			end
 
-			local target = XPA.FindPlayer(args[1])
+			local id = args[1]
+			local target = XPA.FindPlayer(id)
 			local time = tonumber(args[2]) or 1440
 			local reason = args[3] and table.concat(args, " ", 3) or "No reason provided"
 			local preview = XPA.ConvertTime(time * 60)
 
-			if (IsEntity(target) and IsValid(target)) and IsValid(pl) and (target:GetImmunity() > pl:GetImmunity()) then
+			if (IsValid(target) and IsValid(pl)) and (target:GetImmunity() > pl:GetImmunity()) then
 				return
 			end
 
-			XPA.Ban(target, time, reason, pl)
+			XPA.Ban(IsValid(target) and target or id, time, reason, pl)
 
-			if IsEntity(target) and IsValid(target) then
-				local str = " has banned " .. target:Name() .. " for: " .. reason
+			if IsValid(target) or XPA.IsValidSteamID(id) then
+				target = IsValid(target) and target:Name() or id
+
+				local str = " has banned " .. target .. " for " .. preview ..  ": " .. reason
 				if IsValid(pl) then
 					XPA.ChatLogCompounded(pl:Name() .. str, pl:GetRankTitle() .. str)
 				else
 					XPA.ChatLogCompounded("Server" .. str, "Server" .. str)
-				end
-			else
-				local str
-				if XPA.IsValidSteamID(target) then
-					str = " has banned " .. target .. " for: " .. reason
-				else
-					local _target = XPA.FindPlayer(target)
-					if IsValid(_target) then
-						str = " has banned " .. _target:Name() .. " for: " .. reason
-					end
 				end
 			end
 		end
@@ -57,8 +50,8 @@ return "Punishment", "*", {
 		visible = true,
 		string = true,
 		func = function(pl, args)
-			local id = args[1] or ""
-			if id == "" then
+			local id = args[1]
+			if not XPA.IsValidSteamID(id) then
 				return
 			end
 
