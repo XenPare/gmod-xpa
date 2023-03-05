@@ -3,9 +3,7 @@ TIME_MINUTE = TIME_SECOND * 60
 TIME_HOUR = TIME_MINUTE * 60
 TIME_DAY = TIME_HOUR * 24
 TIME_WEEK = TIME_DAY * 7
-TIME_FORTNIGHT = TIME_WEEK * 2
 TIME_MONTH = TIME_DAY * (365.2425 / 12)
-TIME_QUARTER = TIME_MONTH * 3
 TIME_YEAR = TIME_DAY * 365.2425
 
 local function plural(a, n)
@@ -16,7 +14,7 @@ local function plural(a, n)
 end
 
 function XPA.ConvertTime(num, limit)
-	local num = tonumber(num)
+	num = tonumber(num)
 	if num == 0 or num == nil then
 		return "∞"
 	end
